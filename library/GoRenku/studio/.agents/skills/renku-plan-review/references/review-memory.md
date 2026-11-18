@@ -1,0 +1,1292 @@
+# Renku Plan Review Memory
+
+This file stores reusable lessons from explicit user feedback on Renku Studio
+plans. The `renku-plan-retrospective` skill maintains it, and the `renku-plan`
+and `renku-plan-review` skills read it before planning or reviewing.
+
+Accepted documents under `docs/` remain the source of truth. Memory entries are
+attention cues and planning heuristics; they must not override a current product
+or architecture decision.
+
+## Learned Constraints
+
+### 2026-10-03 — Resolve uncertainty before turning it into product machinery
+
+- **User objection:** A small installer change expanded into capability
+  detection, a replacement setup picker and a configuration move. The plan and
+  its attention summary became too hard to understand or review.
+- **Planning rule:** For each proposed mechanism, identify the concrete
+  user-visible failure without it, the existing owner that can handle it, and
+  the smallest check needed to establish whether it is necessary. Absence of a
+  dedicated preflight API does not prove a supported workflow is unavailable.
+  Keep accepted environment baselines explicit without turning them into new
+  detectors. Separate deep research from the proposed change: retain necessary
+  boundaries and tests, but do not turn ordinary release preparation or a
+  testable integration question into a new product workflow. Lead the plan and
+  attention summary with understandable changes and consequences.
+- **Apply when:** One setting triggers moving existing configuration, a
+  possible duplicate triggers replacing a working installer, or an unknown
+  host behavior produces new state, discovery gates or repeated failure matrices.
+- **Evidence to inspect:** The normal user journey, existing configuration and
+  installer owners, supported host contract, relevant failure checks, and the
+  focused experiment that could justify or eliminate each added mechanism.
+
+### 2026-09-08 — Keep execution conventions without overconstraining creative implementation
+
+- **User objection:** A plan converted a successful specifically authored Blender
+  experiment into a shared Python starter and moved it outside its existing
+  Shot Plan domain. The intended reuse was the agent workflow, while each new
+  plan needed its own code and accurate setting-specific geometry. The correction
+  then overreached into prohibiting useful code reuse and repeating feedback as
+  instructions. Folder consistency, revision tracking and execution conventions
+  were still wanted.
+- **Planning rule:** Identify the unit of reuse before extracting tooling. A
+  reusable skill may teach fresh artifact-specific code authoring without
+  shipping a common executable engine or schema. Preserve successful creative
+  specificity and ordinary code reuse/adaptation. Distinguish a request to avoid
+  building a platform from a ban on reusing code. Keep agreed folder structures,
+  revision tracking and execution conventions; remove repeated prohibitions and
+  feedback history from the operational plan. Ask when that boundary is unclear.
+- **Apply when:** Turning a successful creative session into a skill, planning
+  parameterized scripts, or proposing a shared starter and new folder hierarchy.
+- **Evidence to inspect:** The user's new-artifact versus revision workflow,
+  the code and references responsible for accepted quality, existing domain
+  identity/storage, and tests that might accidentally require cross-artifact
+  executable reuse instead of independent high-quality authoring.
+
+### 2026-08-31 — Separate provider capability from product model curation
+
+- **User objection:** A provider plan restricted Engines to two convenient
+  MiniMax H3 operations even though the requested provider boundary was meant
+  to support Pika's catalog generally; Renku Studio, not Engines, should choose
+  the smaller product-visible subset. A later audio plan also preserved
+  ElevenLabs-only provider, model, capability, sample-retrieval, and voice-id
+  contracts in Core after provider generation had been extracted.
+- **Planning rule:** Design a provider integration around the provider-level
+  capability contract the user requested. Do not turn a representative model,
+  pricing example, test fixture, current Studio route, or the only Asset type
+  currently exercising a media operation into an allowlist. When the requested
+  operation is defined by media kind or provider capability, validate that
+  capability at the owning boundary and keep current model/type examples as
+  coverage, not product scope.
+  Before designing a provider-neutral runtime, establish whether the product
+  itself must execute provider requests or whether an agent can use a
+  provider-owned skill/tool and attach the resulting Asset through the existing
+  Core boundary. Prefer independent provider skills with live provider-native
+  schemas when Studio needs only the accepted output; do not build a shared
+  request schema, transforms, catalogs, pricing layer, and execution runtime
+  merely to make agent-owned generation look provider-neutral. Build a shared
+  runtime only when a non-agent product surface genuinely must execute the same
+  logical request across providers, and keep pre-submit validation even when
+  checked-in schemas are removed. Do not recreate deleted catalogs or schemas
+  as Skill-authored control descriptors, request-scoped setup documents,
+  transient presentation schemas, normalized form contracts, or a new Studio
+  model-selection dialog when agent-owned conversational selection already
+  satisfies the product. Keep a Skill model index to the irreducible curated
+  identity, display name, and supported input modes; obtain request fields and
+  constraints from the selected provider through the existing provider tooling
+  rather than copying them into another definition. When the provider catalog
+  spans materially different execution families, such as asynchronous media
+  and synchronous LLM protocols, surface that boundary for confirmation instead
+  of silently narrowing it. Treat provider-specific types, model allowlists,
+  capability unions, provider sample retrieval, and provider compatibility
+  decisions that remain in Core after this extraction as architecture residue,
+  not precedent. Move their interpretation and execution to the provider
+  Skill/Engines boundary. Core may retain only an already accepted opaque
+  persistence envelope or domain fact that does not branch on provider/model
+  identity and does not require a Core change when another provider is added.
+- **Apply when:** Planning a new generation provider, dynamic provider catalog,
+  runtime schema integration, model registry, Studio model picker, reference
+  modality, provider voice/sample workflow, reusable external media handle, or
+  source-derived media operation where a convenient initial model, route, Asset
+  type, or surviving provider-specific Core contract could be mistaken for the
+  supported architecture.
+- **Evidence to inspect:** The provider's agent-readable documentation, official
+  CLI or MCP support, live catalog and protocol families; the existing Asset
+  attachment boundary; whether provider requests must be durable project data;
+  paid-run approval requirements; current Engines
+  list/read/describe/estimate/execute contracts; Project provider Settings; and
+  every proposed shared schema, transform, allowlist, fixed operation id,
+  example, fixture, Asset-type gate, capability filter, duplicated provider
+  fact, setup document, model-selection surface, Core provider/model union,
+  provider-specific command branch, provider fetcher injection, and provider
+  registration table or projection.
+
+### 2026-08-24 — Put reusable provider protocol in tooling, not repeated agent reasoning
+
+- **User objection:** A provider-Skill plan said the Skill would fetch full
+  provider documentation, extract schemas, construct requests, upload, retry,
+  poll, and download for each generation, but did not define a reusable client
+  boundary. Read literally, the agent would repeatedly reinterpret docs and
+  recreate an API client, which is inefficient and unreliable.
+- **Planning rule:** A provider Skill should orchestrate a stable installed
+  provider client/tool, not implement the provider protocol through repeated
+  agent reasoning. Before proposing a new client, inventory the existing
+  provider adapters and their tests; when they already own correct transport,
+  upload, retry, polling, recovery, and output behavior, refactor those proven
+  implementations out of an obsolete generic runtime instead of rebuilding
+  parallel clients. Use an official provider SDK or CLI when it owns auth,
+  upload, queueing, polling, retry, and response handling. When no official
+  media SDK exists, implement one small model-agnostic client for the provider's
+  stable protocol and reuse it across operations. Fetch only the selected
+  operation's machine-readable live metadata/schema when model inputs must be
+  current; use the full agent-readable documentation for initial discovery,
+  protocol-version changes, or unsupported cases, not as the normal execution
+  path. Keep the Skill focused on selecting the operation, supplying the
+  provider-native request, invoking Preview, calling the client, reviewing the
+  artifact, and attaching it.
+- **Apply when:** Planning provider Skills, agent-native media integrations,
+  runtime schema discovery, or “basic tooling” where the plan assigns auth,
+  uploads, retries, queueing, polling, or downloads to instructions rather than
+  a named reusable implementation.
+- **Evidence to inspect:** Existing provider adapters and their focused tests;
+  which behavior belongs to the provider implementation versus a generic
+  schema, simulation, catalog, run, or domain wrapper; official SDK/CLI support;
+  stable provider-wide protocol endpoints; machine-readable catalog/schema
+  APIs; the exact Skill-to-tool commands and data handoff; which documentation
+  is fetched during an ordinary known-model generation; caching/revalidation
+  behavior; and whether adding a model requires code changes or only a
+  different native request and live schema.
+
+### 2026-08-24 — Give Skill tooling an explicit release and installation owner
+
+- **User objection:** A plan invented provider executables beside Skills
+  without saying whether each provider had its own CLI, where those programs
+  lived, how dependencies were packaged, or how users received them through
+  Renku's existing runtime and plugin releases.
+- **Planning rule:** Do not name executable Skill tooling until its source,
+  build, release, installation, invocation, update, and compatibility owner are
+  explicit. Start from the accepted product distribution: if Skills already
+  invoke one separately installed self-contained runtime, prefer provider-
+  scoped commands in that runtime unless the user explicitly accepts expanding
+  the plugin release to package and launch executable code and dependencies.
+  Never assume a marketplace-installed Skill will install npm packages, find a
+  system language runtime, or make a sibling executable available on `PATH`.
+  If independent provider updates are the goal, design and approve that plugin-
+  tool distribution boundary before relying on it.
+- **Apply when:** Planning scripts, helper binaries, MCP servers, provider
+  clients, SDK dependencies, or generated bundles referenced by Skills or
+  plugins, especially when runtime and Skills are released independently.
+- **Evidence to inspect:** Current plugin manifest and installed file tree;
+  Skill invocation paths; package dependencies and build artifacts; native or
+  language runtime availability; runtime archive assembly; marketplace release
+  and update behavior; supported agent hosts; and the compatibility rule when a
+  Skill version requires a newer executable command.
+
+### 2026-08-23 — Separate generation execution from request review and provenance
+
+- **User objection:** A simplification moved provider execution into agent
+  skills but also proposed deleting Generation Preview, prompt editing,
+  reference and configuration review, saved request provenance, and the shared
+  read-only inspector. Those are valuable user capabilities even when Studio no
+  longer executes the provider request.
+- **Planning rule:** Decompose generation before deleting it. Provider catalog,
+  schema validation, uploads, pricing, retries, polling, and execution may move
+  to provider-owned skills while Studio retains the exact reviewed request,
+  prompt editing, generalized reference and configuration presentation, and
+  Asset provenance inspection. Do not recreate provider schemas as a shared UI
+  presentation map: per-field JSON pointers, labels, formats, groups, and media
+  bindings still require active maintenance for every provider, model, and
+  variant. Prefer one schema-free renderer driven by the runtime JSON values,
+  plus only the irreducible request-time facts the user experience needs, such
+  as the editable prompt text and concrete local reference paths. Reuse the
+  same dialog and components for editable Preview and read-only inspection
+  instead of creating provider-specific React renderers or duplicated surfaces.
+  Sharing only the inner tab body is not enough when the dialogs must remain
+  visually identical: the DialogContent dimensions/grid, header, content insets,
+  loading/error placement, footer, and Close action must also have one visual
+  owner, while Preview/Inspection controllers retain only their distinct state
+  and actions.
+  When Preview belongs to an agent-driven workflow, use the existing
+  conversation as the default continuation boundary: open Preview, let the user
+  edit the authoritative temporary request, return from the opening command,
+  and let the agent reread that request after the user confirms. Do not add an
+  app-to-agent callback, resumable job, correlation protocol, wait service, or
+  Generate event merely to automate that normal conversational pause. Add such
+  coordination only when the user separately accepts a Studio action that must
+  resume unattended agent execution.
+- **Apply when:** Moving a provider adapter or generation runtime into an agent
+  skill, removing GenerationSpec or GenerationRun machinery, changing request
+  persistence, proposing to delete Preview/Inspector UI as part of backend
+  simplification, or claiming that a Preview edit or Generate button returns
+  control to an agent.
+- **Evidence to inspect:** The existing Preview and Inspector component reuse;
+  prompt-update path; the direction and lifetime of the Preview coordination
+  event; whether the opening CLI command returns immediately; the existing
+  conversational pause in the Skill; whether reference files can be represented
+  by their concrete project paths without leaking internal Asset/AssetFile
+  identity; the schema-free configuration fallback; Asset provenance;
+  preview-safety rules; and which current contracts exist only for execution
+  rather than user review or inspection.
+
+### 2026-08-24 — Prove retained UI behavior before removing its presentation metadata
+
+- **User objection:** A plan removed the schema-backed control descriptors that
+  powered a rich Configuration UI while claiming the same UI could be
+  reconstructed from opaque JSON. The implementation preserved values but
+  regressed to generic text rows because the plan never separated visual facts
+  recoverable from JSON from select options, bounds, sliders, model families,
+  input modes, and grouping that existed only in the deleted metadata.
+- **Planning rule:** Before deleting metadata that drives a UI the user expects
+  to retain, inventory every visible behavior and identify its exact source.
+  State which behavior survives in the replacement contract and which
+  information is irrecoverable. Define a deterministic reconstruction from the
+  surviving data, name the visual measurements and control states that must be
+  preserved, and require representative full-surface screenshots before
+  completion. Do not hide an information loss behind field-name heuristics,
+  provider/model switches, guessed bounds, one-option controls, or a generic
+  fallback. When exact fidelity requires metadata that the proposed architecture
+  removes, surface that conflict as an explicit approval gate rather than
+  promising both outcomes.
+- **Apply when:** Removing schemas, catalogs, descriptors, annotations, model
+  families, or other metadata while retaining Preview, Inspection, Settings,
+  configuration, form, or control-rich UI.
+- **Evidence to inspect:** The former component's actual input types and visual
+  composition; screenshots at the real desktop scale; the replacement DTO and
+  every field it preserves; representative current Project values; schema and
+  catalog deletion scope; focused projection/component tests; and final
+  full-dialog screenshot comparisons rather than isolated DOM assertions.
+
+### 2026-08-24 — Preserve deterministic domain context when removing provider machinery
+
+- **User objection:** A provider simplification deleted the purpose-to-domain
+  context that supplied related Cast, Locations, Props, Lookbooks, dialogue,
+  Shots, Beats, and relationship-derived continuity media, then left Skills to
+  rediscover those relationships from prose and unrelated commands. A
+  corrective plan then overreached by turning the restored context into
+  eligibility, required-slot, readiness-blocker, and fixed-guidance rules. Both
+  mistakes weaken Renku: the first withholds its Project knowledge, while the
+  second converts useful knowledge into creative permission.
+- **Planning rule:** Before removing a generation or purpose system, separate
+  provider execution/schema/lifecycle responsibilities from Core-owned domain
+  projection. Inventory every purpose's target facts, related subjects,
+  Lookbooks, dialogue/voice context, workflow policy, reference roles, and exact
+  relationship-derived media suggestions. Treat context as evidence, not
+  permission: agents must receive the deterministic Project briefing, but may
+  ignore, supplement, or replace its suggestions using user direction, creative
+  judgment, or provider needs. Do not turn related media into an allowlist,
+  missing creative context into a readiness blocker, or product guidance into a
+  hard constraint. Reserve rejection for a separately established integrity,
+  security, authorization, or provider-contract invariant. Do not restore
+  deleted provider machinery merely because it was previously co-located with
+  valuable context.
+- **Apply when:** Removing or restructuring generation Specs/Runs, provider
+  catalogs or schemas, purpose registries, context commands, or moving provider
+  execution into Skills.
+- **Evidence to inspect:** Current and deleted Core context contracts; the full
+  purpose/target matrix; explicit domain relationships and suggestion
+  derivation; context callers in CLI, docs, Skills, and evals; real populated
+  Project data; whether the report contains required/eligible/fixed/readiness
+  semantics; and whether a deletion boundary combines provider mechanics with
+  domain knowledge that no adapter or Skill can own reliably.
+
+### 2026-08-22 — Keep product-chosen filesystem names free of spaces
+
+- **User objection:** A proposed default Project Library folder was named
+  `Renku Projects`, but the user does not want spaces in folder paths or
+  filenames and chose the simpler name `Renku`.
+- **Planning rule:** When Renku chooses a filesystem name rather than preserving
+  a user-authored or externally defined name, prefer a concise whitespace-free
+  directory or filename. Show the exact generated path in plans, contracts,
+  examples, tests, and checklists; do not silently reintroduce a display label
+  such as “Renku Projects” as the on-disk name.
+- **Apply when:** Planning default roots, Project Library locations, generated
+  folders, filenames, installer paths, fixtures, or CLI examples whose on-disk
+  names are controlled by Renku.
+- **Evidence to inspect:** Platform path tables, filesystem resolvers, visible
+  onboarding copy, HTTP examples, CLI documentation, tests, and fixtures that
+  contain product-generated directory or file names. Preserve existing paths
+  unless the user separately authorizes a rename or migration.
+
+### 2026-08-22 — Establish the visual target before implementing design-sensitive UI
+
+- **User objection:** A credential dialog met the functional and copy
+  requirements but still shipped as a cramped stack of generic secret fields
+  with weak typography, margins, scale, and visual hierarchy, even after the
+  user explicitly requested design-skill involvement.
+- **Planning rule:** For a design-sensitive Studio surface, do not treat
+  component-library compliance or reduced copy as sufficient design work. Audit
+  the current surface at the real desktop scale, create distinct visual
+  directions grounded in the existing product language, obtain the user's
+  selection, and make that selected composition the implementation and visual
+  verification target. Plans must name typography, spacing, grouping, dialog
+  proportions, and surrounding-app context when those qualities materially
+  define the requested result.
+- **Apply when:** Planning or revising dialogs, onboarding steps, Settings
+  surfaces, or other focused UI where the user asks for a polished, tasteful,
+  attractive, or design-led result.
+- **Evidence to inspect:** A current full-window screenshot; the surface at its
+  actual desktop dimensions; nearby Studio typography, spacing, surfaces, and
+  actions; the chosen visual reference; and final screenshots compared with
+  that reference before calling the implementation complete.
+
+### 2026-08-22 — Give credential Settings one user-facing source of truth
+
+- **User objection:** A provider-key dialog exposed legacy environment-variable
+  precedence, status pills, repetitive hidden-key explanations, and per-row
+  removal actions. The result made a simple saved-key form feel like a secret
+  administration system and left users unsure which key Renku would use.
+- **Planning rule:** Treat credential-source precedence as an explicit product
+  decision, not a compatibility default. Start from the user's model of the
+  key Renku will use; do not preserve or explain a second runtime source unless
+  the product genuinely needs it. Represent an existing write-only secret
+  primarily through the field state and concise replacement behavior. Add
+  badges, source labels, helper copy, or deletion only when each supports a
+  current user goal. If an accepted ADR encodes different precedence, surface
+  that conflict and revise the ADR after approval instead of hiding the choice
+  in implementation detail.
+- **Apply when:** Planning API-key Settings, onboarding credential steps,
+  password-like write-only fields, secret rotation, or a migration from shell
+  environment setup to product-managed credentials.
+- **Evidence to inspect:** The accepted source-of-truth decision, every runtime
+  credential resolver, current setup documentation, the visible copy/action
+  inventory for each key row, and established write-only secret UI patterns.
+
+### 2026-08-22 — Scope provider Settings to accepted product use
+
+- **User objection:** A global credential Settings plan exposed every provider
+  integration found in the repository instead of the smaller provider set the
+  user confirmed the product actually uses.
+- **Planning rule:** Treat a credential Settings catalog as an explicit product
+  allowlist. Do not infer its providers from all adapters, environment-variable
+  names, model catalogs, or historical integrations present in the repository.
+  Verify the current accepted provider set, expose and manage only that set,
+  and leave unaccepted integrations outside the UI and persistence contract
+  unless the user separately requests their removal or redesign.
+- **Apply when:** Planning provider credential UI, onboarding credential steps,
+  provider enablement, managed secret storage, or capability catalogs that
+  could accidentally mirror every implementation found in the codebase.
+- **Evidence to inspect:** The user's accepted provider list, current product
+  workflows and model routes, active provider documentation, credential
+  consumers used by those workflows, and whether repository-only integrations
+  are being mistaken for supported product scope.
+
+### 2026-08-17 — Match tag architecture to the accepted ownership level
+
+- **User objection:** The plan oscillated between one long scalar purpose, an
+  opaque agent-only JSON convention, and a first-class schema change without
+  clearly separating those product choices. The accepted direction was a real
+  Asset `tags` contract with a database rename and migration.
+- **Planning rule:** Decide first whether tags are merely an agent convention or
+  first-class domain metadata. If an existing opaque field is intentionally
+  sufficient, avoid a schema cutover. If first-class tags are accepted, name
+  them `tags` end to end across database, public types, commands, projections,
+  and documentation; store one JSON string array; migrate populated scalar
+  values once; and remove the prior scalar directly. Do not mix an opaque
+  serialized convention with a partially typed runtime contract. Keep readable
+  human description in its own summary field.
+- **Apply when:** A plan changes purposes, tags, labels, capabilities, or other
+  classifications used by agents and product surfaces.
+- **Evidence to inspect:** The accepted metadata owner and consumers; whether
+  tags must round-trip through runtime projections or commands; existing
+  populated data; every schema, public-contract, writer, CLI, and documentation
+  caller; the one-way migration; and deliberate fallback behavior when a
+  preferred tag is absent.
+
+### 2026-08-16 — Separate reference fidelity from target rendering style
+
+- **User objection:** A Storyboard prompt plan treated realistic Production
+  reference images as though their rendering style should influence a
+  hand-drawn Storyboard, instead of using them to preserve the exact Character,
+  Location, or Prop design inside the independently chosen Storyboard style.
+- **Planning rule:** Give every visual reference one explicit role. Continuity
+  references own canonical subject facts such as identity, silhouette,
+  proportions, costume, Prop construction and state, or Location geography;
+  the target Lookbook owns medium, realism, linework, finish, lighting, grade,
+  and detail density. Prompt for faithful reproduction of the referenced
+  subject in the target Lookbook's visual language. A coarse style may simplify
+  detail while keeping the subject unmistakably the same; it must not inherit
+  photographic realism merely because the continuity sheet is realistic.
+- **Apply when:** A generation plan combines Production reference media with a
+  differently styled Storyboard, concept image, animation frame, or other
+  target artifact.
+- **Evidence to inspect:** Exact reference roles and prompt mentions; the
+  Lookbook or other appearance authority; identity, costume, geometry, state,
+  and geography invariants; and evals that pair realistic references with a
+  deliberately non-realistic target style.
+
+### 2026-08-16 — Keep creative cardinality independent from generation batching
+
+- **User objection:** A Storyboard plan made four Beats sound like a Scene Beat
+  design limit even though the Scene may need any number of narrative Beats;
+  four is only the proven cost-saving image-generation batch. The same plan
+  risked changing a working composite/cropping workflow by adding new crop
+  rules or external image-processing machinery.
+- **Planning rule:** Define domain authoring first, with cardinality determined
+  by the creative material. Apply batching only after the durable items exist:
+  partition the requested ordered items into provider requests without adding,
+  deleting, merging, or reordering them. When the current composite and
+  agent-guided crop path is explicitly proven, preserve it as a regression
+  baseline; do not introduce crop libraries, fixed coordinates, detection
+  algorithms, or alternative splitting paths without a separate demonstrated
+  defect and user-approved scope.
+- **Apply when:** Cost or latency optimization batches independently authored
+  Beats, Shots, scenes, prompts, or other creative units into composite media.
+- **Evidence to inspect:** The authoring contract and its cardinality rules; the
+  exact point where batching starts; remainder behavior; existing layout and
+  crop implementation/tests; dependency changes; and an example whose item
+  count exceeds one batch.
+
+### 2026-08-16 — Keep generative visual QA one-pass by default
+
+- **User objection:** A Storyboard workflow proposed generate-analyze-edit or
+  automatic regeneration loops that would consume unnecessary model calls and
+  agent tokens.
+- **Planning rule:** Generate the approved request once, inspect the result,
+  perform only the already accepted deterministic extraction or attachment
+  steps, then accept it or report why it is unusable and stop. Do not plan an
+  automatic image edit, repair prompt, feedback loop, retry, or regeneration.
+  A later fresh generation is a new user-directed request with its own review
+  and cost boundary.
+- **Apply when:** Planning agent QA for generated images, composite sheets,
+  candidate media, or other paid/usage-metered creative outputs.
+- **Evidence to inspect:** Workflow diagrams and evals for retry arrows,
+  regeneration wording, edit calls after inspection, automatic quality gates,
+  and whether a failed result returns control to the user.
+
+### 2026-08-16 — Separate preferred execution from managed model hints
+
+- **User objection:** A Scene Storyboard plan called a Renku-managed GPT Image
+  2 route the recommended initial path even though the intended first recipe
+  was Codex built-in GPT Image 2.
+- **Planning rule:** Treat Generation Context workflowPolicy and an
+  agent-external harness capability as the execution-path decision. Treat a
+  purpose's settings.recommendedModel only as a hint within the
+  Renku-managed Engines model list. Never describe the managed hint as the
+  product's initial path, add a harness-owned generator to Engines, or create a
+  skill-local default that bypasses Core policy. Offer a harness-owned path only
+  when the active harness actually exposes that built-in capability; another
+  harness must not be told to call a tool it does not have. Do not invent a
+  provider adapter or generic cross-harness abstraction merely to hide that
+  capability difference. When both lanes matter, name the primary and secondary
+  request shapes separately and make the representative sample match the
+  primary path.
+- **Apply when:** A media plan mentions Codex built-in image generation,
+  agent-external specs, Renku-managed provider routes, workflow preferences,
+  recommendedModel, or a sample that could imply which lane runs first.
+- **Evidence to inspect:** Decisions 0040 and 0074; Generation Context
+  workflowPolicy and capability fields; the active harness's actual built-in
+  tools; the purpose's managed settings and Engines model descriptors;
+  media-producer route precedence; behavior when the preferred harness
+  capability is absent; and the exact purpose sample's executionKind, provider,
+  model, values, and references.
+
+### 2026-08-10 — Preserve implemented plans and consolidate corrective adoption
+
+- **User objection:** An already implemented plan was retroactively rewritten
+  to describe a new release direction, then the correction was split across
+  multiple new plans. That erased the plan's value as an implementation record
+  and made one coordinated adoption harder to review.
+- **Planning rule:** Treat an implemented plan as historical evidence of the
+  working baseline. Restore or leave it unchanged and create one follow-up
+  adoption plan when the user wants the current implementation moved to a new
+  contract. Do not scatter that adoption across separately numbered plans when
+  the user explicitly requests one owner and one completion checklist, even if
+  the plan carefully separates repository and distribution responsibilities.
+- **Apply when:** A working-tree implementation has already completed its plan
+  and later review changes release policy, ownership, distribution, or another
+  cross-cutting contract.
+- **Evidence to inspect:** The implemented plan's status and checked items; the
+  current working-tree behavior; which later edits changed the historical plan;
+  every proposed follow-up plan; and whether one adoption checklist can retain
+  clear ownership without rewriting the baseline.
+
+### 2026-08-10 — Separate repository releases from cross-product installation
+
+- **User objection:** A proposal correctly made Studio and Studio Skills
+  independent repositories but still mixed their release lifecycles with the
+  combined end-user installation journey. It then treated one example version
+  tag as the user's long-lived Codex marketplace source without explaining that
+  this would pin the installation, and implied that the already working plugin
+  package might need restructuring. That made it unclear which project owned
+  tags and versions, encouraged the Studio archive to bundle or rewrite a
+  separately released Codex plugin, and confused immutable release identity
+  with an updateable distribution channel.
+- **Planning rule:** Define each repository's version bump, release commit, tag,
+  GitHub Release, and artifacts entirely within that repository. Then define
+  installation and distribution as a separate consumer of those immutable
+  releases. A cross-product install guide may order the steps and state
+  compatibility, but it must not create a shared version, copy sibling source,
+  expose unreleased development state, pin users to one immutable tag without
+  an explicit update story, or make one repository publish the other. Preserve
+  a working host package structure unless current host behavior proves a
+  concrete incompatibility. For rapidly changing agent-host installation,
+  triangulate the latest fetched primary documentation, the current installed
+  CLI's own help, and the current desktop UI before planning changes; stop and
+  request permission when those sources disagree rather than restructuring the
+  companion repository speculatively.
+- **Apply when:** Planning a product made from separately released runtime,
+  plugin, skills, extension, model, content-pack, or companion repositories;
+  especially when one user journey installs more than one of them.
+- **Evidence to inspect:** Each repository's manifests, tags, GitHub Releases,
+  release scripts, and ownership documents; every cross-repository checkout or
+  copy; the immutable release refs and mutable distribution channel, if any;
+  current primary host installation documentation; current CLI help and desktop
+  behavior; installer side effects; the existing package's proven installation
+  path; and whether the user guide accidentally creates a shared release
+  identity or a non-upgradeable subscription.
+
+### 2026-08-10 — Start releases from repository-owned versioned refs
+
+- **User objection:** A distribution plan treated an arbitrary workflow version
+  input and a sibling repository's current checkout as releasable product
+  contents. It did not first define a product-version source of truth, create a
+  release commit and tag, or publish a GitHub Release, so the same nominal
+  version could package unrelated commits and independently versioned projects.
+  A revision then assumed a pull-request-based release ceremony even though the
+  maintainer's established, successful workflow was a local command that bumps
+  versions, creates the release commit and tag, and publishes the release.
+- **Planning rule:** Every product release plan must begin with the owning
+  repository's version, immutable source ref, release tag, and GitHub Release
+  lifecycle before designing artifact upload. Build and publish only from the
+  tagged commit, require the tag and checked-in version to agree, promote one
+  verified artifact set to mirrors or update channels, and make retries reuse
+  those exact bytes. Inspect and preserve the maintainer's established release
+  command and prepare/publish recovery boundary; do not introduce pull requests,
+  release branches, or manual web forms as ceremony unless the user requests
+  them or a hard operational boundary requires them. Never build a release from
+  a moving, dirty, or unversioned sibling checkout. Separately owned
+  repositories release independently; a cross-repository compatibility
+  statement may be explicit, but it must not become an undeclared lockstep
+  bundle.
+- **Apply when:** Planning installers, archive assembly, GitHub Actions release
+  workflows, package publication, CDN/R2 promotion, plugin distribution, or any
+  product artifact that copies files from another repository.
+- **Evidence to inspect:** Checked-in package/product versions; existing tags
+  and GitHub Releases; package-level release commands; local ship, prepare,
+  preflight, and publish scripts; tag-to-commit and default-branch rules;
+  release manifests and checksums; draft/published release behavior; whether
+  mirrors promote the exact GitHub assets; every cross-repository checkout or
+  local sibling path; and the independent repository's own version and release
+  history.
+
+### 2026-08-10 — Verify the active coding-agent surface before adding a bridge
+
+- **User objection:** A distribution plan assumed a desktop host could not
+  invoke the Renku CLI and added a separate local protocol server. That
+  assumption confused the host's general chat surface with its coding-agent
+  mode. The current desktop coding mode uses the same agent engine as the CLI
+  harness and already has local shell execution, so the added server duplicated
+  an existing capability and expanded installation, packaging, security, and
+  testing without a product need.
+- **Planning rule:** For every named desktop and terminal harness, verify the
+  current execution mode and built-in tools from current primary documentation
+  before designing integration infrastructure. When the supported coding-agent
+  mode already runs local commands and uses the same skill/plugin contract as
+  its terminal counterpart, let skills invoke the installed CLI directly. Add
+  a bridge, daemon, protocol adapter, or second command surface only when the
+  user explicitly needs a distinct host mode that cannot execute the CLI, and
+  surface that expansion for approval.
+- **Apply when:** Planning desktop-agent support, comparing a host's chat and
+  coding modes, or proposing a local server, protocol adapter, daemon, helper
+  executable, or duplicated command API for an existing CLI-backed skill.
+- **Evidence to inspect:** Current official host documentation; the exact host
+  mode the product supports; available shell, filesystem, plugin, and PATH
+  behavior; parity with the terminal harness; the existing CLI/skill contract;
+  and whether the user requested support for a non-coding chat surface.
+
+### 2026-08-08 — Surface scope expansion before it hides in plan detail
+
+- **User objection:** A simple shared-numbering and project-folder request grew
+  into an unrelated FDX policy redesign. The corrective rule then became too
+  broad and appeared to prohibit normal engineering work such as identifying
+  relevant edge cases and adding proper warnings or errors. Because the plan
+  was long, consequential invented behavior was easy to miss during review.
+- **Planning rule:** Continue to identify concrete edge cases, validation,
+  warnings, errors, and safety measures that directly support the requested
+  behavior. Distinguish those from adjacent product expansion. Any proposed
+  setting, flag, mode, public contract, schema field, workflow restriction,
+  migration effect, or policy outside the request must be traced to a current
+  requirement or hard boundary. If it is an additional product choice, surface
+  it for explicit approval instead of embedding it in the plan. Put a concise
+  Review Attention summary near the top of substantial plans and repeat it in
+  the user-facing handoff; name added behavior, unchanged behavior, migration
+  and destructive effects, material assumptions, and approval decisions.
+- **Apply when:** A focused request starts touching an adjacent workflow or
+  several packages, or a plan introduces Settings, flags, routes, public types,
+  schema, diagnostics, data cleanup, file moves, or a large migration that a
+  user could miss in the detailed body.
+- **Evidence to inspect:** Compare the user's request and requirement ledger
+  with every new public concept and side effect; inspect the plan's opening
+  summary and final handoff; and verify that directly relevant edge cases remain
+  covered while unrelated product choices are separately visible and approved.
+
+### 2026-08-08 — Separate runtime revision retention from a clean migration baseline
+
+- **User objection:** A review interpreted “restore the previous Beats” as
+  permission to replace the existing immutable history with a two-row undo
+  buffer, delete older Beat revisions, consume the rejected revision during
+  restore, and flatten Storyboard files out of their iteration folders. That
+  destroyed the retained work needed to move backward and forward between
+  revisions and contradicted the repository's other revision-backed documents.
+  A later correction overreached in the other direction by migrating every old
+  development revision even though the explicitly requested clean local
+  database should start from only the currently active revision.
+- **Planning rule:** When a domain already has immutable revision rows, active
+  selection, and artifacts authored for those revisions, preserve that runtime
+  lifecycle unless the user explicitly asks to replace its retention model.
+  Reset or regenerate creates and activates another revision; restore changes
+  active selection and does not delete either the restored revision or the
+  later one. Evaluate a one-time clean rebuild separately: when the user asks
+  the reconstructed pre-customer database to start from current state only,
+  migrate the active revision as the new baseline and leave obsolete history in
+  the archive. Keep iteration folders for artifacts that still belong to the
+  retained current aggregate; do not infer that dropping old revision rows
+  requires flattening or deleting current media candidates.
+- **Apply when:** Planning reset, regenerate, replace, undo, restore, history
+  retention, active selection, a one-time clean database reconstruction, or
+  filesystem reorganization for a revisioned aggregate.
+- **Evidence to inspect:** Existing history and state tables; list/read/set-
+  active commands; accepted ADR retention behavior; whether child IDs and Asset
+  ownership reconnect retained media; the exact active rows chosen for the clean
+  baseline; which media owners still exist in those rows; current iteration-
+  folder allocation; the archive boundary; and whether a proposed deletion is a
+  one-time local cleanup or a change to normal runtime retention.
+
+### 2026-08-08 — Do not invent generation lineage, but preserve revision artifact folders
+
+- **User objection:** A filesystem proposal turned a small filename need into
+  numbered generation folders, monotonically allocated generation counters,
+  edit-version suffixes, and implied Asset-series tracking. The added lineage
+  model would require a large cross-Asset refactor even though the user only
+  needed concurrent outputs for the same semantic object to have distinct,
+  recognizable filenames.
+- **Planning rule:** First decide whether a visible number communicates durable
+  human order or only prevents filename collisions. Use persistent,
+  insertion-safe, never-recycled numbering for user-addressed ordered domain
+  objects such as Scenes, Shots, and Beats. When an object has no authored
+  order or insertion semantics, such as creation-sequenced Shot Plans, prefer a
+  simple monotonic counter with no reuse instead of forcing it through the
+  ordered allocator. When a generated file
+  only needs a discriminator, size the shortest human-distinguishable token
+  against the expected maximum occupancy of the exact filename namespace,
+  quantify the per-draw collision chance, and use a bounded collision-check and
+  retry at the owning write boundary. Keep existing database provenance; do not
+  add generation directories, editable version counters, Asset-series
+  aggregates, or lineage registries without a separate current product
+  requirement for them. This does not authorize flattening an established
+  iteration folder that keeps artifacts from retained domain revisions
+  recoverable and human-distinguishable; preserve that folder when revision
+  restoration is a current workflow.
+- **Apply when:** Planning generated media filenames, alternate candidates,
+  image edits, regeneration, concurrency, or any proposal that introduces
+  counters or nested folders solely to distinguish files.
+- **Evidence to inspect:** The exact user-visible meaning of the suffix,
+  expected same-name occupancy, alphabet size, retry count, atomic/exclusive
+  write behavior, existing GenerationSpec/run/Asset provenance, concurrent
+  attachment paths, collision behavior in the destination folder, whether the
+  existing folder corresponds to retained domain revisions or only filename
+  allocation, and whether users need to sort, cite, restore, or navigate
+  generations by that visible value.
+
+### 2026-08-09 — Keep FDX-backed Screenplays read-only without building a source-policy system
+
+- **User objection:** The proposal first built a broad FDX source-policy system,
+  then overcorrected by leaving FDX-backed Screenplays editable. The intended
+  rule is much smaller: projects without an FDX retain Renku's agent-authored
+  create/apply/restore workflow; when an FDX import backs the Screenplay, Renku
+  simply cannot edit it.
+- **Planning rule:** Use the existing singleton FDX import row as one Core-owned
+  authoring gate. Do not add source modes, permission logic, Settings, CLI flags,
+  overrides, provenance, fallback warnings, or reconciliation machinery. Reads
+  and downstream production workflows remain available. Carry imported Scene
+  numbers through unchanged in domain data: do not apply generated-number
+  grammar, trimming, case folding, non-empty checks, or uniqueness checks. When
+  a number enters a folder or filename, derive a separate safe path label at the
+  Core filesystem boundary without rewriting the stored value. The Scene-number
+  allocator remains one-way for numbers Renku generates.
+- **Apply when:** Planning FDX import, agent-authored screenplay workflows,
+  Scene numbering, screenplay provenance, media folders keyed by Scene number,
+  or future re-import association.
+- **Evidence to inspect:** The last accepted pre-change importer, Settings,
+  warnings, skill guidance, screenplay-drafter contracts, Scene JSON schema,
+  database constraints, migration guards, allocator inputs, and presentation
+  code; whether the new work changes any of them; and whether every proposed FDX
+  mechanism was explicitly requested rather than inferred from a numbering/path
+  task.
+
+### 2026-08-06 — Design user-browsed folders for recognition, not database identity
+
+- **User objection:** A media-storage plan used opaque Scene, Shot Plan, and
+  Shot ids as directory names, then added deep technical layers such as
+  `generations/`, `videos/`, `first-frames/`, and `last-frames/`. The resulting
+  tree was internally unambiguous but hostile to a person browsing the project:
+  users could not recognize a Scene, related Shot Plan media was scattered
+  across subfolders, and paths became unnecessarily long.
+- **Planning rule:** Treat a user-browsed project folder as a product surface.
+  Start its design from the shortest human recognition path: use established
+  human-facing numbers or concise names for navigational folders, keep media
+  that users inspect together in one folder, and distinguish asset roles with
+  short filenames when another directory would add no useful navigation. Do not
+  expose opaque database ids or mirror internal generation taxonomy in folder
+  depth merely because those values are convenient and stable in code. Resolve
+  database identity through Core-owned metadata, not by asking users to decode
+  paths.
+- **Apply when:** Planning project files that users will open in Finder, asset
+  destination rules, Scene or Shot Plan media placement, or any hierarchy with
+  repeated single-purpose directory levels.
+- **Evidence to inspect:** Draw the proposed tree with realistic values from
+  `urban-basilica`; count the clicks from the project root to the media users
+  inspect together; compare every folder segment with the names or numbers shown
+  in Studio; and confirm Core can resolve collisions and durable identity
+  without putting ids in user-visible paths.
+
+### 2026-08-06 — Start cohesive settings as one versioned property bag
+
+- **User objection:** A Project Settings plan turned thirteen simple workflow
+  preferences into fourteen relational columns plus separate aggregate, patch,
+  policy, resource, adapter, and validation interfaces. That made adding or
+  versioning a setting require coordinated schema and contract expansion even
+  though the settings are consumed as one cohesive document.
+- **Planning rule:** Apply the simplicity rule before normalizing configuration.
+  When settings are read and written together and no accepted query, join,
+  uniqueness, or relational-integrity requirement needs individual columns,
+  start with one project-local singleton containing one explicitly versioned
+  JSON property bag. Keep its schema, defaults, validation, migration, and
+  focused read/update command in Core, but do not create a column or public
+  interface hierarchy for every preference. Add relational structure only when
+  a concrete current requirement proves it necessary.
+- **Apply when:** Planning Project preferences, feature flags, workflow policy,
+  UI settings, or another small extensible configuration document whose values
+  share one lifecycle and are not independently queried by SQLite.
+- **Evidence to inspect:** Compare the requested behavior with the proposed
+  column, type, patch, service, route, diagnostic, and test count; identify any
+  real SQL query or integrity rule that requires normalization; inspect existing
+  Core JSON-schema/AJV validation and Drizzle migration conventions; and require
+  an explicit document-version and one-way upgrade story before accepting the
+  design.
+
+### 2026-08-06 — Start schema design from the project-local database scope
+
+- **User objection:** A Project Settings plan said it would create one row “for
+  every Project,” backfill every Project row, and key the new table by
+  `project_id`, which made the design read like one shared database could hold
+  several Projects. Renku actually gives each Project its own SQLite database;
+  the home library only discovers those separate databases.
+- **Planning rule:** Treat the project-local SQLite database as the existing
+  Project ownership boundary. Model project-wide state as a true singleton,
+  following the established `singleton_id = 1` pattern unless a concrete
+  relationship inside that database needs another entity id. Describe schema
+  creation and migration as operating on one project database at a time. Do not
+  add redundant Project foreign keys or multi-project backfill language that
+  implies tenant scoping the database already provides.
+- **Apply when:** A plan adds Project-wide settings, configuration, status, or
+  another one-per-Project aggregate; proposes a `project_id` owner column in a
+  project-local database; or describes a migration as iterating over Projects
+  rather than upgrading each selected database independently.
+- **Evidence to inspect:** The canonical
+  `<project-folder>/.renku/project.sqlite` path, the migration config's one
+  `RENKU_PROJECT_DATABASE_PATH` target, `readProjectRecord`'s singleton read,
+  existing singleton schemas such as `screenplay.singleton_id = 1`, and the
+  library code that discovers separate Project folders/databases.
+
+### 2026-08-03 — Define every public field in the plan that owns the model
+
+- **User objection:** A backend data-model plan moved its actual interfaces to
+  a supporting document and then used fields such as a string-array
+  `storyFunction` without defining what they meant, who authored them, whether
+  they came from import, or how consumers used them.
+- **Planning rule:** The phase that implements a public model must contain its
+  complete normative types and persistence mapping. Define every field,
+  identity alias, discriminator, referenced union, input shape, and schema:
+  meaning, owner, optionality, ordering, authorship/import source, validation,
+  storage, and important consumer behavior. Do not use a supporting context
+  document as the only owner, and do not present an interface as complete while
+  leaving members unexplained or referenced types undefined.
+- **Apply when:** A plan introduces or replaces a domain aggregate, shows a
+  TypeScript/JSON interface, uses arrays or generic strings whose vocabulary is
+  unclear, links to another document for “full definitions,” or names a closed
+  operation/schema union without enumerating it.
+- **Evidence to inspect:** The owning phase plan, every displayed field and
+  referenced type, JSON Schemas, Drizzle columns and constraints, migration
+  source values, real sample values, UI/projection consumers, import behavior,
+  CLI authoring inputs, and sister-skill examples.
+
+### 2026-08-03 — Preserve legacy data without preserving a legacy subsystem
+
+- **User objection:** A screenplay redesign relaxed the existing Renku Scene-
+  number allocator but still preserved its separate reservation registry, even
+  though that registry was an initial product hack and the accepted import
+  source already supplied the relevant Final Draft Scene Number semantics.
+- **Planning rule:** When replacing a pre-customer subsystem with an
+  authoritative domain or interchange-format concept, first decide the correct
+  semantic owner and contract from the target workflow. Convert valid existing
+  values into that contract, but do not retain the old registry, allocator,
+  normalization, reservation, or lifecycle behavior merely because it already
+  exists. Treat data preservation and architecture preservation as separate
+  decisions.
+- **Apply when:** A plan imports an industry format, replaces an acknowledged
+  prototype or hack, or changes a direct entity property while proposing to
+  retain an older companion registry/service behind it.
+- **Evidence to inspect:** The external format's authoritative documentation,
+  the exact persisted values and orphan/reservation rows in the real sample,
+  current allocation and normalization code, entity ownership, ordering rules,
+  and the ADR that must be superseded if the accepted target changes it.
+
+### 2026-08-02 — Clarify the target instead of reflexively agreeing and redesigning
+
+- **User objection:** After the user rejected a plan's model and naming, the
+  agent reflexively agreed with the criticism and immediately began another
+  from-scratch redesign without first understanding the desired ownership
+  model or clarifying the choices exposed by that criticism. Agreement became
+  a substitute for senior engineering judgment. Later, the agent endorsed a much
+  shorter installer plan without explaining its changed guarantees or showing
+  why the revision was supported, again weakening trust.
+- **Planning rule:** Never say the user is right merely to absorb criticism or
+  reduce friction. Separate verified defects from unresolved product choices,
+  explain the evidence for each current assumption, challenge claims when the
+  evidence points elsewhere, and ask focused questions whose answers materially
+  determine the replacement. Do not rewrite a rejected plan until the intended
+  outcome, ownership boundaries, and important tradeoffs are understood well
+  enough that another blind attempt is unnecessary.
+  When the user has clearly chosen the desired behavior, do not ask them to
+  repeat it. Explain why the revised design satisfies that choice, distinguish
+  removed machinery from lost guarantees, preserve required protections, and
+  identify what is verified versus still awaiting an acceptance test. A request
+  for simplicity does not prove the simpler replacement is correct.
+- **Apply when:** A user rejects a plan broadly, asks for a redesign from
+  scratch, questions the meaning or ownership of several foundational fields,
+  or introduces requirements that admit materially different domain models.
+- **Evidence to inspect:** Re-read the user's exact objections, enumerate every
+  disputed assumption and unanswered product choice, then compare the current
+  implementation, accepted documentation, real project data, external-format
+  evidence, and actual user-facing workflow before proposing a replacement.
+  Confirm the user has answered the decisions that cannot be learned from
+  evidence alone.
+
+### 2026-07-19 — Convert local development data instead of preserving obsolete contracts
+
+- **User objection:** A review treated old values in the single local sample
+  database as a reason to keep or choose an obsolete product name. A later plan
+  made the opposite mistake: it applied a “no existing data” instruction about
+  one never-created Shot-image schema to a cross-domain Asset refactor even
+  though the sample project already contained Cast, Location, Lookbook,
+  Storyboard, Dialogue Audio, and generic relationship rows. Another completed
+  rebuild preserved legacy Scene numbers correctly under the runtime opacity
+  rule but missed the separately intended display-format conversion for the one
+  known local sample whose values were generated before that model.
+- **Planning rule:** When the user confirms the current product contract and
+  only pre-customer development data uses the old contract, plan one verified
+  one-way data conversion, update every current caller and document directly,
+  and remove the old value from runtime code. Do not add aliases, dual-role
+  matching, fallback readers, or compatibility diagnostics. When the user has
+  explicitly scoped the conversion to one known local project with no users,
+  do not demand distributable migration infrastructure, fleet-style upgrade
+  behavior, or user-facing recovery machinery: keep the conversion narrow,
+  one-time, and verified against that project. Schema changes must still follow
+  the repository's accepted migration workflow, but the data-conversion design
+  should match its actual local-only blast radius. Scope “no data”
+  assumptions to the exact tables and migrations proven empty or unapplied;
+  every populated table affected by a broader schema change needs an explicit
+  preservation mapping and verification. Do not infer a current multi-file,
+  multi-role, or otherwise broader domain contract from leftover sample rows:
+  verify current writers, readers, accepted decisions, and skills first, then
+  convert or remove development-only files that the current product no longer
+  creates. Keep opaque imported/runtime values separate from an explicitly
+  authorized local sample conversion: do not add product validation or infer
+  provenance from arbitrary values, but when the user identifies exact
+  pre-customer rows as old locally generated data, map only those known rows
+  once and update their registered filesystem paths atomically.
+- **Apply when:** Repository code and accepted docs disagree with the intended
+  product name while the conflicting persisted state is limited to local sample
+  projects that can be backed up and upgraded once, or when a new feature
+  triggers consolidation of already-populated neighboring domain tables.
+- **Evidence to inspect:** Search current contracts, relationship roles, asset
+  types, persisted JSON keys, storage paths, tests, documentation, sister
+  skills, the Drizzle journal and applied schema generation, and per-table rows
+  in the real sample database. Identify duplicate Asset ownership and file-path
+  cases before defining the conversion; keep obsolete wording only in the
+  one-way conversion or explicit historical records. For a local formatting
+  correction, inspect the exact entity-id/value mapping, every registered path
+  derived from those values, collision and rollback safety, the untouched
+  archive boundary, and proof that no runtime importer, validator, or general
+  migration was added.
+
+### 2026-07-19 — Trace concepts to needs without erasing requirement detail
+
+- **User objection:** A focused product request first expanded into a roughly
+  two-thousand-line plan containing invented machinery and was then overcorrected
+  into a shorter plan that made the requested UX, agent workflow, implementation
+  shape, and checklist too vague. Line count was never the objective.
+- **Planning rule:** Build a requirement ledger from explicit user needs,
+  user-accepted findings, current documented rules, and hard boundaries. Trace
+  it both ways: remove every unsupported behavior or mechanism, but preserve
+  every accepted UX detail, workflow step, supported variant, data effect,
+  implementation owner, verification, and checkable completion item. Prefer
+  extending the existing owner and remove repeated explanation, not requirement
+  detail. When revising an already detailed plan to correct one foundational
+  boundary, compare the replacement section-by-section with the prior plan and
+  carry every unaffected accepted behavior, contract, migration rule, default,
+  diagnostic, and verification item forward; do not let a cleaner architecture
+  summary replace the implementation specification. When the accepted work has
+  independently implementable and reviewable
+  delivery gates with different owners—such as a backend contract cutover, a
+  UI restoration, a format importer, or an adjacent persisted-analysis
+  redesign—use separately numbered plans with explicit dependencies and
+  self-contained acceptance gates instead of one massive plan and checklist.
+  In particular, separate a provider-ready architecture refactor from the first
+  production provider integration when the foundation can be completed and
+  proven through existing providers plus a test-only fixture. The foundation
+  plan must leave production provider code, credentials, Settings adoption,
+  Skill guidance, and paid E2E coverage to the dependent provider plan; the
+  provider plan must consume the established seam rather than redesign it.
+  A coordinated release or migration may still require multiple plans to pass
+  before it is applied; separate plan ownership does not require a temporary
+  runtime compatibility stage. Do not apply that split when the explicit
+  requirement is one reusable mechanism or algorithm shared across several
+  domain objects with the same behavior. In that case, keep the shared contract
+  and algorithm visibly owned once, and use focused domain adapters only for
+  genuinely different persistence or lifecycle boundaries; splitting the work
+  must not fragment the shared implementation or invite parallel domain-specific
+  copies. First compare the actual semantics: an explicitly unordered,
+  creation-sequenced object may correctly use a focused monotonic counter
+  instead of an insertion-aware ordered allocator. When
+  that split would scatter or compress shared product reasoning, evidence,
+  exact contracts, cross-surface behavior, or a
+  common verification matrix, preserve those parts in one linked supporting
+  design reference. Make clear that it is not another implementation plan:
+  phase plans own sequencing and completion, while the shared reference keeps
+  cross-cutting semantics inspectable without copying them into every plan.
+  Once the user has decided an issue, rewrite the active plan around the
+  accepted behavior. Remove rejected alternatives, decision-question labels,
+  reviewer back-and-forth, and the chronology of how the plan evolved unless
+  that history is itself required implementation context.
+  In particular, do not carry a discussed-and-discarded mechanism that never
+  existed into non-goals, prohibitions, removal tasks, tests, or checklists.
+  That can make an implementer believe it exists or requires work. Describe
+  the accepted change against the actual system; retain explicit user
+  constraints and existing behavior that must be preserved.
+- **Apply when:** A small user-visible change produces many new response types,
+  modes, services, dispatchers, diagnostics, routes, documentation edits, or
+  repeated plan sections, or when simplification replaces exact requirements
+  with phrases such as “update callers,” “update the skill,” or “test normally.”
+  Also apply when one phase is explicitly allowed to leave another layer broken
+  or when backend, UI, importer, migration, or agent work can reach meaningful
+  completion in sequence without sharing one completion status. Apply when a
+  provider architecture refactor and a new production provider have distinct
+  completion/verification gates, even when the provider is the reason the seam
+  is being prepared. Apply when a
+  foundational model change exposes a separate pre-existing subsystem defect
+  that deserves its own contract, migration, and verification even if both
+  changes must ship together. Apply the shared-reference check when several
+  phase plans depend on the same detailed model, evidence base, fidelity
+  boundary, UI regression contract, or agent workflow and the split drafts
+  replace those details with brief summaries.
+- **Evidence to inspect:** Compare the product request with every in-scope item,
+  new concept, proposed file, validation, documentation target, verification
+  step, and checklist group; identify existing owners that can be changed
+  directly, then confirm no accepted requirement disappeared during compression.
+  For a revision, diff the old and new requirement ledgers, product-behavior
+  sections, public contracts, migration rules, tests, and checklists; explain
+  every removed detail as either superseded or deliberately unchanged elsewhere.
+  Compare the pre-split source with the phase plans, preserve cross-cutting
+  material in a clearly linked supporting reference, and confirm every phase
+  names the exact sections it depends on.
+  Search the final plan for superseded option labels, unresolved-decision
+  language, and explanations of rejected models that implementers no longer
+  need. Check whether each excluded or removed mechanism actually exists or
+  reflects an explicit user constraint, rather than an abandoned discussion idea.
+
+### 2026-07-22 — Follow the repository's established implementation-plan structure
+
+- **User objection:** A new active plan used an ad hoc format and omitted the
+  architecture guidance and review structure present in the plan template and
+  recent active plans.
+- **Planning rule:** Before drafting, read `plans/PLAN_TEMPLATE.md` and inspect
+  the section structure of the roughly ten most recent comparable active plans.
+  Use the established sequence of summary, accepted scope or requirements,
+  context and evidence, Architecture Shape Gate, named contracts,
+  implementation slices, owning-layer tests and guardrails, documentation,
+  final verification, and a comprehensive completion checklist. Adapt sections
+  only when the work genuinely does not need them; never omit the Architecture
+  Shape Gate for production-code changes.
+- **Apply when:** Creating or substantially rewriting an active implementation
+  plan, especially when an earlier draft grew its own requirement, decision,
+  or review taxonomy.
+- **Evidence to inspect:** Compare headings and checklist depth against the
+  template and recent plans; verify that package ownership, intended module and
+  file layout, public entrypoints, thin `index.ts` boundaries, forbidden code
+  shapes, and architecture stop conditions are explicit before review.
+
+### 2026-07-23 — Keep optional context references soft and warning-based
+
+- **User objection:** A plan turned optional creative-context references into
+  foreign-key and hard-validation rules, so later changes to the referenced
+  creative document could invalidate otherwise usable durable work.
+- **Planning rule:** First classify a reference as ownership/integrity or
+  optional context. For optional context, preserve the authored identifier,
+  allow the referenced object to change or disappear, resolve available context
+  best-effort, and return structured stale/missing-reference warnings. Do not
+  reject writes, fail reads, cascade-delete the referring object, or require the
+  UI to repair it before the user or an agent can continue.
+- **Apply when:** Durable project data points to versioned or mutable creative
+  material only to help a user or agent understand context, especially when
+  prompting or an explicit later update can compensate for missing context.
+- **Evidence to inspect:** Confirm whether the relationship owns lifecycle or
+  merely supplies guidance; inspect source revision/deletion behavior, proposed
+  foreign keys and validators, read/report warning contracts, and whether an
+  agent can receive the available context plus enough diagnostics to ask the
+  user what to do next.
+
+### 2026-07-23 — Separate normal workflow guidance from durable invariants
+
+- **User objection:** A plan turned normal product behavior—such as not
+  attaching meaningless simulation output and usually receiving one provider
+  output—into additional data-layer rejection rules and output-count
+  validation.
+- **Planning rule:** Enforce only invariants needed to keep durable state
+  coherent. Describe normal application or agent behavior without adding a
+  validator when an unusual path can still be represented safely. In
+  particular, do not create status-specific or provider-output-count machinery
+  when attachment already identifies one exact file and the durable model owns
+  one final Asset.
+- **Apply when:** A requirement describes what the ordinary UI, CLI, agent, or
+  provider path does most of the time but does not require corrupt or ambiguous
+  durable state to be rejected.
+- **Evidence to inspect:** For every proposed validation, identify the invalid
+  persisted state it prevents, whether an existing envelope or identity check
+  already protects that state, and whether the rule belongs to a caller's
+  normal workflow instead.
+
+### 2026-07-23 — Stop when revision planning turns into dependency infrastructure
+
+- **User objection:** A proposed unified revision-owned Asset plan expanded a
+  narrow product need into a large dependency-management and lifecycle system
+  with little immediate product value, including machinery the product had
+  intentionally removed before.
+- **Planning rule:** Do not infer a cross-product revision or dependency
+  framework from a purpose-specific media need. If the requirement cannot be
+  satisfied simply within accepted current ownership boundaries, stop and
+  return the unresolved product/architecture choice instead of designing a
+  universal owner graph, dependency guard, copy framework, or reconciliation
+  system.
+- **Apply when:** A plan for a small owned media capability begins changing
+  multiple existing owner kinds, discard paths, generation purposes, or
+  lifecycle services in order to claim consistency.
+- **Evidence to inspect:** Compare the proposed file, contract, migration, and
+  validation count with the direct user-visible outcome. Remove the slice when
+  the shared machinery is larger than the accepted product behavior or revives
+  a previously rejected dependency model.
+
+### 2026-07-26 — Inspect analogous owned-media paths before choosing the schema
+
+- **User objection:** A Shot image plan mechanically copied generic Asset
+  relationship columns, confused copying with sharing one Asset, and then
+  proposed removing common Asset machinery too broadly without first comparing
+  Cast profile images, Location hero images, storyboard images, Lookbook
+  membership, lifecycle services, and skill workflows. A later correction still
+  chose one of those inconsistent existing patterns and added another public
+  Asset shape instead of recognizing that the repeated ownership and selection
+  implementations themselves needed consolidation. Another revision treated
+  batch Storyboard generation and slicing as a reason to preserve a separate
+  durable Beat-image association even though each sliced image has the same
+  owner, candidate, and canonical-selection behavior as a Shot image.
+- **Planning rule:** Before designing an owned-media collection, trace the
+  nearest existing examples through schema, public projection, Core mutation,
+  file/provenance persistence, selection, copy, Trash, CLI, and agent guidance.
+  When the same product concept already has several storage tables, public
+  shapes, commands, or selection paths, do not select one flawed precedent or
+  add a new adapter beside them. Identify one source of truth, move the existing
+  owners to that model in the same architecture slice, and delete the duplicate
+  paths. Keep focused domain-detail records only when they own real additional
+  facts rather than mirroring generic ownership or selection. Require a current
+  product need for every remaining column. Keep generation batching,
+  compositing, slicing, and import orchestration outside the durable model once
+  their outputs become ordinary owned media. Unless the product explicitly
+  says “share,” copying creates independent entity, file, and path identities.
+- **Apply when:** Adding a media candidate collection, selected image, owner
+  membership, copy operation, or purpose-specific generation attachment,
+  especially when two or more existing domains already implement similar
+  collection or selection behavior differently.
+- **Evidence to inspect:** Generic relationship tables and why their roles and
+  ordering exist; purpose-specific child tables and why their extra columns
+  exist; existing selection tables and commands; Asset/AssetFile write-sets,
+  provenance, copy, and Trash primitives; duplicated Asset type versus
+  relationship-role values; real project rows that store the same ownership
+  twice; whether a focused record exists only because several outputs were
+  generated or imported together; public response shapes, UI collection
+  plumbing, CLI, and sister-skill call sequences.
+
+### 2026-07-26 — Keep canonical display selection separate from generation choice
+
+- **User objection:** A proposed unified Asset model put `selected` on every
+  Asset without preserving that Profile, Hero, Lookbook card, Shot image, and
+  Beat Storyboard image selection is a canonical representation choice, while
+  Character Sheet, Location Sheet, Dialogue Audio Take, and other generation
+  references are chosen independently by each generation request.
+- **Planning rule:** Name and model selection by product scope rather than media
+  kind. A canonical selection may exist only when the product defines one
+  current representation for its subject, including one Storyboard image for a
+  Beat as well as owner-level Profile, Hero, Lookbook card, and Shot images.
+  Generation reference choices, including the exact Dialogue Audio Take, belong
+  to the persisted GenerationSpec that consumes them and must never read,
+  initialize, or mutate canonical representation state. A shared Asset
+  collection model must preserve this distinction rather than making every
+  image or audio Asset globally selectable.
+- **Apply when:** Consolidating Asset ownership, adding a selected flag or
+  command, defining media import selection, projecting generation candidates,
+  or making a canonical image available to UI and downstream workflows.
+- **Evidence to inspect:** Focused display-choice requirements and UI uses;
+  the durable identity of nested subjects such as a Beat within a Beat Sheet;
+  Asset type capabilities; `GenerationSpec.references`; purpose reference
+  guides and exact AssetFile or Dialogue Audio Take selections;
+  import-and-select commands; tests that prove one request can choose a
+  different Character Sheet, Location Sheet, or Dialogue Audio Take without
+  changing canonical representation state.
+
+### 2026-07-26 — Design skill workflows around user intents, not command count alone
+
+- **User objection:** Agent skills were made fragile by requiring several small
+  CLI mutations for one accepted intent, while a simplistic cleanup risked
+  collapsing meaningful generation safety and approval steps.
+- **Planning rule:** Give one durable user intent one coarse Core/CLI operation
+  when it can be atomic, such as importing and explicitly selecting an accepted
+  image or creating an initial collection from one document. Keep separate
+  calls when they represent real review, approval, execution, inspection, or
+  later-edit boundaries. Add skill evals for unnecessary loops as well as for
+  skipped safety gates.
+- **Apply when:** A Studio skill repeatedly reads unchanged context, creates an
+  aggregate object one child at a time, or performs a second mutation that was
+  already explicit in the first command's user intent.
+- **Evidence to inspect:** The owning Core transaction, CLI flag/document
+  contract, existing Preview and approval workflow, aggregate context coverage,
+  focused later-edit commands, and forward evals for both efficiency and
+  correctness.
+
+### 2026-07-23 — Keep plan review manual and user-controlled
+
+- **User objection:** Automatic review loops repeatedly expanded a plan as each
+  pass invented another edge case, consumed substantial time and tokens, and
+  had no practical stopping condition.
+- **Planning rule:** Plan creation and revision end after one bounded
+  requirement, consistency, and simplification pass. Never dispatch a plan
+  reviewer automatically. Run a review only when the user explicitly requests
+  it, apply only feedback the user accepts, and do not initiate another pass
+  without a new user request.
+- **Apply when:** Creating or revising any active implementation plan, or after
+  receiving review feedback that would broaden product behavior or architecture.
+- **Evidence to inspect:** Check whether review was explicitly requested,
+  whether each proposed correction traces to accepted requirements, and whether
+  the plan is growing from reviewer-generated scenarios rather than product
+  value.
+
+### 2026-07-19 — Cover edge cases once at their owning layer
+
+- **User objection:** Simplification must not reduce meaningful test coverage;
+  the problem is repeating the same edge-case matrix at Core, HTTP, React, CLI,
+  integration, and E2E layers.
+- **Planning rule:** Keep comprehensive edge and invalid-state coverage at the
+  layer that owns the rule. Test adapters for translation and UI for visible
+  behavior, then use representative integration journeys instead of copying the
+  owning layer's full matrix upward.
+- **Apply when:** A plan lists the same missing, malformed, mismatch, lifecycle,
+  or persistence cases under several test layers.
+- **Evidence to inspect:** Map each test to the rule it proves and the package
+  that owns that rule; remove cross-layer duplicates while retaining boundary-
+  specific assertions.
+
+### 2026-07-19 — Supersede ADRs without rewriting their history
+
+- **User objection:** Changed decisions must remain discoverable, but an older
+  ADR's original reasoning should not be edited to look as though the new
+  direction had always applied.
+- **Planning rule:** Record changed direction in a new ADR. Add only a concise
+  notice near the top of each affected older ADR linking to the new ADR and
+  stating that the old decision is superseded or narrowed; leave its historical
+  body intact.
+- **Apply when:** A plan removes or materially changes behavior previously
+  accepted in one or more ADRs.
+- **Evidence to inspect:** Read the current and older decision records, identify
+  the exact supersession scope, and verify both the new ADR and discoverability
+  notice are planned without a historical rewrite.
+
+### 2026-07-30 — Separate obsolete workflow contracts from durable research
+
+- **User objection:** A cleanup treated an entire skill subtree as stale and
+  deleted researched Seedance and other provider-specific video guidance,
+  examples, and eval material that was intentionally retained for the next
+  workflow.
+- **Planning rule:** Never use an old folder name as the deletion boundary when
+  a skill path mixes executable workflow contracts with durable provider or
+  creative research. Inventory each file, remove obsolete purposes, targets,
+  commands, lifecycle rules, and executable envelopes, then refresh and re-home
+  reusable provider guidance, examples, source provenance, and eval intent.
+  Keep unsupported provider research inactive by excluding it from current
+  route registries and executable fixtures rather than deleting it.
+- **Apply when:** A plan removes or replaces an agent workflow whose folder also
+  contains model-specific prompting research, vendor findings, golden or
+  negative examples, or reusable evaluation scenarios.
+- **Evidence to inspect:** Read the full skill subtree and its Git history;
+  compare accepted prompt-ownership decisions, current provider capability
+  research, exact route documentation, active model catalogs, route registries,
+  samples, and evals; require every deleted file to have either a named
+  successor or an explicit finding that it contains only an obsolete executable
+  contract.
+
+### 2026-08-02 — Use folders as module boundaries instead of filename prefixes
+
+- **User objection:** A plan claimed to split a broad screenplay area but kept
+  proposing groups of `screenplay-*` files directly under Core client, CLI
+  commands, and Studio route folders. Correcting only the first example left the
+  same structural mistake in the other affected layers.
+- **Planning rule:** In an Architecture Shape Gate, express a domain boundary
+  once as a folder, then organize multi-file concerns beneath it. Review every
+  affected production-code tree—contracts, owning services, persistence,
+  schemas, wiring, resources, adapters, and features—rather than fixing one
+  representative list. Use an `index.ts` only as an intentional thin module
+  entrypoint, do not leave compatibility re-exports, and do not overcorrect by
+  creating a directory solely for each single production file.
+- **Apply when:** A proposed file list repeats one domain prefix across several
+  files in a broad parent folder, one dispatcher is being split into several
+  sibling prefixed handlers, or a plan reorganizes Core while leaving the same
+  flat grouping in CLI, HTTP, services, or UI.
+- **Evidence to inspect:** Enumerate every proposed source tree and compare it
+  with current import/registration boundaries. Check which concerns have
+  multiple collaborating files, where callers should enter the module, whether
+  old paths are deleted directly, and whether any planned `index.ts` contains
+  behavior instead of exports or shallow composition.
+
+### 2026-08-02 — Make non-owning container deletion match its flattening semantics
+
+- **User objection:** A plan described Acts and Sequences as organization-only
+  but allowed deletion only when empty, as though child Scenes were owned by the
+  section. The expected behavior was to remove the wrapper, splice its direct
+  children into the parent at the same position, and preserve their identity and
+  order.
+- **Planning rule:** When a container is explicitly non-owning, do not give its
+  deletion contract ownership-like blockers or cascading behavior. Define one
+  deterministic splice operation that removes only the wrapper, promotes direct
+  children without recursively flattening child containers, and preserves
+  surrounding order and descendant identity. Verify that durable dependencies
+  belong to the children or another real owner before claiming deletion is free.
+- **Apply when:** Planning optional sections, folders, groups, categories, or
+  other organizational wrappers whose contents must remain valid when the
+  wrapper is removed.
+- **Evidence to inspect:** Ownership tables and unions, foreign keys, dependent
+  document scopes, canonical ordering, move/delete command contracts, mixed
+  sibling examples, and owning-layer tests for empty and non-empty deletion.
+
+### 2026-08-02 — Trace every public union variant through all consumers
+
+- **User objection:** A screenplay plan made the dialogue variant detailed but
+  left the other Scene block kinds as a prose list, without proving their JSON
+  Schema, persistence validation, sister-skill contracts, Narrative rendering,
+  or downstream UI behavior. Broad phrases such as “update the UI” and “update
+  affected skills” hid important work.
+- **Planning rule:** When a plan introduces or replaces a discriminated union,
+  enumerate every accepted variant and trace it end to end: public type, closed
+  schema, persistence boundary, import/migration mapping, projections and agent
+  context, adapter contract, user-visible presentation, samples/evals, and
+  owning-layer tests. Shared envelopes are fine when variants have identical
+  durable fields, but the discriminator, mapping, and exhaustive consumers must
+  remain explicit. Name exact affected Skill/reference/sample families and UI
+  surfaces instead of using catch-all follow-up language.
+- **Apply when:** One union member receives a concrete type or renderer while
+  siblings appear only in an enum/prose list, an importer supports several
+  source element kinds, or a plan says “all consumers,” “the rest of the UI,”
+  “affected examples,” or similar without an inspectable inventory.
+- **Evidence to inspect:** Existing union/schema definitions, real persisted
+  variant counts, importer source-element vocabulary, database JSON validators,
+  context/plain-text projectors, React switches and keys, navigation/resource
+  DTOs, downstream evidence anchors, and every sister-skill contract, sample,
+  and eval that authors or consumes the union.

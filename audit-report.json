@@ -1,0 +1,1385 @@
+{
+  "method": "static regex triage; not a sandbox or proof of safety",
+  "skills_scanned": 1982,
+  "findings": [
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/manim.md",
+      "line": 374,
+      "excerpt": "| macOS (Apple Silicon and Intel) | `brew install --cask basictex` (BasicTeX 2026), open a new terminal, then `sudo tlmgr update --self && sudo tlmgr install standalone preview doublestroke relsize fundus-calligra wasysym physics dvisvgm rs"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/manim.md",
+      "line": 376,
+      "excerpt": "| Linux | TeX Live 2026 (scheme-basic) plus the same `tlmgr install` list, or the distro packages: `sudo apt install texlive texlive-latex-extra texlive-fonts-extra texlive-science cm-super dvisvgm` (Debian/Ubuntu), `texlive-scheme-basic` p"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/manim.md",
+      "line": 384,
+      "excerpt": "`sudo apt install libcairo2-dev libpango1.0-dev pkg-config python3-dev`; Fedora"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/manim.md",
+      "line": 385,
+      "excerpt": "`sudo dnf install cairo-devel pango-devel pkgconf-pkg-config python3-devel`; Arch"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/manim.md",
+      "line": 386,
+      "excerpt": "`sudo pacman -S cairo pango pkgconf`. Windows gets wheels. setup checks them before it downloads anything"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FavioVazquez/showtime/skills/showtime/references/render.md",
+      "line": 564,
+      "excerpt": "| Linux: Chrome fails to start in a container | install Chrome's system libraries (`sudo npx playwright install-deps chromium`) |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/SKILL.md",
+      "line": 188,
+      "excerpt": "**Linux** : les commandes `sudo` demandent un mot de passe, l'utilisateur les tape dans son"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/SKILL.md",
+      "line": 191,
+      "excerpt": "`pipx install yt-dlp`, sans `sudo` (le paquet apt est souvent trop vieux pour TikTok)."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/edit/README.md",
+      "line": 61,
+      "excerpt": "| Python 3.10 ou plus | les scripts du montage | `brew install python` | `winget install Python.Python.3.12` | `sudo apt install python3` | — |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/edit/README.md",
+      "line": 62,
+      "excerpt": "| ffmpeg et ffprobe, avec libass | couper, assembler, rendre ; libass incruste les sous-titres | `brew install ffmpeg-full` | `winget install Gyan.FFmpeg` | `sudo apt install ffmpeg` | ~270 Mo avec ses dépendances (mesuré sur un Mac) |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/edit/README.md",
+      "line": 66,
+      "excerpt": "| Node 18 ou plus *(facultatif)* | Remotion anime le titre, les cartons et le carton de fin ; sans Node, ffmpeg les dessine et la vidéo sort quand même | `brew install node` | `winget install OpenJS.NodeJS.LTS` | `sudo apt install nodejs np"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/edit/scripts/settings.py",
+      "line": 37,
+      "excerpt": "'Linux `sudo apt install ffmpeg`')"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 491,
+      "excerpt": "c.systeme, \"sudo apt install python3   # Ubuntu 22.04 et plus : 3.10 ou plus\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 520,
+      "excerpt": "return [\"sudo apt install ffmpeg   # Fedora : sudo dnf install ffmpeg\"]"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 654,
+      "excerpt": "fix = [\"sudo apt install build-essential cmake git\","
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 657,
+      "excerpt": "\"sudo cp whisper.cpp/build/bin/whisper-cli /usr/local/bin/\"]"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 744,
+      "excerpt": "c.systeme, [\"sudo apt install nodejs npm   # node -v doit dire 18 ou plus, sinon : https://nodejs.org\"])"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/vincentventalon/claude-code-video-editing-skill/skills/short-video/setup/scripts/setup.py",
+      "line": 766,
+      "excerpt": "return [\"pipx install yt-dlp   # sans pipx : sudo apt install pipx ; le paquet apt yt-dlp est souvent trop vieux pour TikTok\"]"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/mathruffian-dot/claude-motion-explainer-images/skills/motion-explainer-images/scripts/fetch_fonts.sh",
+      "line": 48,
+      "excerpt": "rm -rf \"$TMP\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/mathruffian-dot/claude-motion-explainer-video/skills/motion-explainer-video/scripts/fetch_fonts.sh",
+      "line": 48,
+      "excerpt": "rm -rf \"$TMP\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/references/render-export.md",
+      "line": 277,
+      "excerpt": "Remotion caches intermediates across renders - this speeds up iteration but hoards disk. On a long project, `rm -rf node_modules/.cache/remotion` between major iteration waves reclaims 5-20 GB."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/scripts/sample-reference-frames.sh",
+      "line": 49,
+      "excerpt": "trap 'rm -rf \"$WORK\"' EXIT"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/scripts/sample-reference-frames.sh",
+      "line": 191,
+      "excerpt": "rm -rf \"$OUT_DIR\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/scripts/verify-scaffold.sh",
+      "line": 44,
+      "excerpt": "rm -rf \"$WORK\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/scripts/verify-scaffold.sh",
+      "line": 54,
+      "excerpt": "rm -rf \"$WORK/node_modules\" \"$WORK/out\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/noamdorr/saas-product-demo-video/skills/saas-product-demo-video/scripts/render-stills.sh",
+      "line": 77,
+      "excerpt": "rm -rf \"$SEQ_DIR\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/ahmdd4vd/MotionCraft/skills/motioncraft/scripts/doctor.sh",
+      "line": 11,
+      "excerpt": "apt-get:node) echo \"see https://nodejs.org (or: sudo apt-get install -y nodejs npm)\";; apt-get:ffmpeg) echo \"sudo apt-get install -y ffmpeg\";;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/ahmdd4vd/MotionCraft/skills/motioncraft/scripts/doctor.sh",
+      "line": 12,
+      "excerpt": "dnf:node) echo \"sudo dnf install nodejs\";; dnf:ffmpeg) echo \"sudo dnf install ffmpeg\";;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/ahmdd4vd/MotionCraft/skills/motioncraft/scripts/doctor.sh",
+      "line": 13,
+      "excerpt": "pacman:node) echo \"sudo pacman -S nodejs npm\";; pacman:ffmpeg) echo \"sudo pacman -S ffmpeg\";;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/argus-metis/hermes-video-editing/_root/SKILL.md",
+      "line": 107,
+      "excerpt": "sudo apt-get install ffmpeg   # Debian/Ubuntu"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Lunamos/paper2video/skills/paper2video/scripts/new_video.sh",
+      "line": 29,
+      "excerpt": "rm -rf \"$NAME/scripts/__pycache__\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Lunamos/paper2video/skills/paper2video/scripts/covers.sh",
+      "line": 33,
+      "excerpt": "trap 'rm -rf \"$TMP\"' EXIT"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/3d/README-3D.md",
+      "line": 17,
+      "excerpt": "If it says `not installed` and the brief needs 3D, install only the components the brief needs. Nothing uses sudo or admin rights."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/edit/README-EDIT.md",
+      "line": 25,
+      "excerpt": "If the brief needs editing and it says `not installed`, install only the components the brief needs. Nothing uses sudo or admin rights, and nothing touches your system PATH."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/scripts/vendor_libs.sh",
+      "line": 35,
+      "excerpt": "trap 'rm -rf \"$WORK\"' EXIT"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/scripts/doctor.sh",
+      "line": 18,
+      "excerpt": "PKG=\"sudo apt install -y\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/scripts/doctor.sh",
+      "line": 19,
+      "excerpt": "command -v dnf >/dev/null 2>&1 && PKG=\"sudo dnf install -y\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/scripts/doctor.sh",
+      "line": 20,
+      "excerpt": "command -v pacman >/dev/null 2>&1 && PKG=\"sudo pacman -S --needed\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/qualixar/brief2mp4/plugin/skills/brief2mp4/scripts/doctor.sh",
+      "line": 21,
+      "excerpt": "command -v zypper >/dev/null 2>&1 && PKG=\"sudo zypper install -y\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/neurolena1/video-effects-pack/skills/video-effects-pack/SKILL.md",
+      "line": 30,
+      "excerpt": "- Missing Python or ffmpeg on the user's own computer: do not install system software silently. Tell the user what is missing, propose the command for their system and wait for a yes: Windows `winget install Python.Python.3.12` / `winget in"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/neurolena1/video-effects-pack/skills/video-effects-pack/scripts/check_env.py",
+      "line": 19,
+      "excerpt": "ok = False; print(\"MISSING  %s -> install FFmpeg and make sure it is in PATH (Windows: winget install ffmpeg | macOS: brew install ffmpeg | Linux: sudo apt install ffmpeg)\" % exe)"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Dancan254/shenghua/skills/shenghua/scripts/extract_clip.sh",
+      "line": 77,
+      "excerpt": "rm -rf \"${WORK:?}/clips/$NAME\" \"$WORK/clips/$NAME.wav\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Dancan254/shenghua/skills/shenghua/scripts/mix-encode.sh",
+      "line": 139,
+      "excerpt": "[[ -n \"$FRAMES_SIZE\" ]] && echo \"frames/ still holds $FRAMES_SIZE — rm -rf \\\"$WORK/frames\\\" once the video is verified\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/jincheng2026/jc-remotion-skills/skills/remotion-gotchas-index/SKILL.md",
+      "line": 40,
+      "excerpt": "| 24 | 工程工作流 | 渲染报 `Named export not found`/`plugin is not a function` 等包内部错 | npm 并发安装可致包损坏（多会话同时 npm i / 进程互杀中断写盘）：症状=require 返回空导出、依赖树内部 TypeError；修法=坏包 `rm -rf node_modules/<包>`+`npm cache clean --force`+重装，多处腐坏直接 `rm -rf node_modules &"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/jincheng2026/jc-remotion-skills/skills/remotion-assembly/SKILL.md",
+      "line": 33,
+      "excerpt": "| **缺 node / ffmpeg** | **能自动装就自动装，不要把命令甩给用户**（多数环境用系统包管理器装这两个不需要管理员权限）：<br>① macOS 有 brew（`command -v brew`）→ 告知一句「缺 X，我用 brew 装一下，约几分钟」后直接 `brew install <只装缺的>`，装完重跑本节<br>② Windows 有 winget → `winget install OpenJS.NodeJS Gyan.FFmpeg`<br>"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/AmirSbss/spotlight/skills/spotlight/scripts/doctor.sh",
+      "line": 15,
+      "excerpt": "req \"uv (sound mix, music tempo and cues)\" \"command -v uv\" \"curl -LsSf https://astral.sh/uv/install.sh | sh  (or brew install uv)\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AIPMAndy/Andy-Video-Skill/02-recording-to-video/andy-screencast-to-viral/README.md",
+      "line": 210,
+      "excerpt": "sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AIPMAndy/Andy-Video-Skill/01-programmatic-animation/text-rain-generator/CHEATSHEET.md",
+      "line": 164,
+      "excerpt": "sudo apt install ffmpeg  # Linux"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AmitSubhash/3brown1blue/src/three_b1b/skill/rules/troubleshooting.md",
+      "line": 25,
+      "excerpt": "sudo apt install texlive-full"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AmitSubhash/3brown1blue/src/three_b1b/skill/rules/first-scene-tutorial.md",
+      "line": 24,
+      "excerpt": "# sudo apt install libcairo2-dev ffmpeg libpango1.0-dev"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AmitSubhash/3brown1blue/src/three_b1b/skill/rules/first-scene-tutorial.md",
+      "line": 38,
+      "excerpt": "# sudo apt install texlive-full"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AmitSubhash/3brown1blue/src/three_b1b/skill/rules/remotion-integration.md",
+      "line": 285,
+      "excerpt": "rm -rf manim/media remotion/public/clips/*.mp4 remotion/public/clips/*.webm remotion/out"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/liangdabiao/story-handdrawn-video/_root/SKILL.md",
+      "line": 20,
+      "excerpt": "**视频不许重跑（硬规则）**：Agnes Video 当前虽然 $0/秒，但是**异步任务 + 轮询慢**（每段 30s–2min），且未来恢复 $0.005/秒就是钱。脚本默认 skip 已存在的 `<sid>.mp4`，这是省时间省钱的关键。**不要**为了「看看 prompt 改了会不会更好」而 `rm -rf public/assets/videos/` 重跑整轮。只有某段真的无法观看（全黑/全白/画面完全错误）才删那一个 `<sid>.mp4` 单跑，其余段自动跳"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/liangdabiao/story-handdrawn-remotion/_root/SKILL.md",
+      "line": 16,
+      "excerpt": "**付费图片不许重跑（硬规则）**：apiz nano-banana-2 约 0.32 元/张，16 场≈5 元/轮。**不要**为了\"看看 prompt 改了会不会更好\"而 `rm -rf public/assets/generated/<hash>/` 重跑，也不要逐张 Read 检查然后重画\"稍微不完美\"的图。脚本默认 skip 已存在的 master，这是省钱的关键——信任它。改 prompt 模板/代码不会让旧资产重新计费（资产 hash 只取决于 story 文本"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/TheMarco/claude-music-video/plugins/music-video-generator/skills/music-video/SKILL.md",
+      "line": 36,
+      "excerpt": "TMP=\"$ENGINE.part\" && rm -rf \"$TMP\" \"$ENGINE\" && mkdir -p \"$TMP\" &&"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/ZLHad/OpenVideoHarness/skills/open-video-harness/SKILL.md",
+      "line": 25,
+      "excerpt": "curl -fsSL https://raw.githubusercontent.com/ZLHad/OpenVideoHarness/main/install.sh | bash"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smwbev/framewright/.agents/skills/framewright/references/troubleshooting.md",
+      "line": 103,
+      "excerpt": "| frame count differs from the plan | old frames left in `frames/` | `rm -rf frames` before a full render, or `RESUME=1` deliberately |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smwbev/framewright/.agents/skills/framewright/scripts/make.sh",
+      "line": 15,
+      "excerpt": "rm -rf frames && node \"$HERE/render.mjs\" frames \"$SEED\" \"$WIDTH\" \"$TABS\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smwbev/framewright/.agents/skills/framewright/scripts/doctor.sh",
+      "line": 17,
+      "excerpt": "elif command -v apt-get >/dev/null; then sudo apt-get update -qq && sudo apt-get install -y \"$1\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smwbev/framewright/.agents/skills/framewright/scripts/doctor.sh",
+      "line": 18,
+      "excerpt": "elif command -v dnf >/dev/null; then sudo dnf install -y \"$1\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smwbev/framewright/.agents/skills/framewright/scripts/doctor.sh",
+      "line": 19,
+      "excerpt": "elif command -v pacman >/dev/null; then sudo pacman -S --noconfirm \"$1\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/OpenMontageInc/OpenMontage/.claude/skills/video-edit/SKILL.md",
+      "line": 22,
+      "excerpt": "sudo apt update && sudo apt install -y ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/OpenMontageInc/OpenMontage/.agents/skills/hyperframes/PROVENANCE.md",
+      "line": 55,
+      "excerpt": "rm -rf \".agents/skills/$d\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/OpenMontageInc/OpenMontage/.agents/skills/video-edit/SKILL.md",
+      "line": 22,
+      "excerpt": "sudo apt update && sudo apt install -y ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/OpenMontageInc/OpenMontage/.agents/skills/media-use/SKILL.md",
+      "line": 119,
+      "excerpt": "curl -fsSL https://static.heygen.ai/cli/install.sh | bash   # installs latest to ~/.local/bin"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/cocolayuan/videoclip-AI-skill/安装/SKILL.md",
+      "line": 91,
+      "excerpt": "sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/oxygenframe/oxframe-sdk/skills/oxframe/SKILL.md",
+      "line": 18,
+      "excerpt": "1. Install the CLI: `curl -fsSL https://github.com/oxygenframe/oxframe-cli/releases/latest/download/install.sh | sh`"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/oxygenframe/oxframe-sdk/plugins/oxframe/skills/oxframe/SKILL.md",
+      "line": 18,
+      "excerpt": "1. Install the CLI: `curl -fsSL https://github.com/oxygenframe/oxframe-cli/releases/latest/download/install.sh | sh`"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/HibaBenzahra/HibAi-Editing-Studio/skills/hibai-studio/scripts/00_setup.sh",
+      "line": 43,
+      "excerpt": "rm -rf \"$TMP\"; exit 0"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/HibaBenzahra/HibAi-Editing-Studio/skills/hibai-studio/scripts/00_setup.sh",
+      "line": 149,
+      "excerpt": "elif have apt;   then sudo apt install -y ffmpeg || NOTE+=(\"ffmpeg فشل\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/HibaBenzahra/HibAi-Editing-Studio/skills/hibai-studio/scripts/07_contact_sheet.sh",
+      "line": 15,
+      "excerpt": "TMP=\"$W/.sheet\"; rm -rf \"$TMP\"; mkdir -p \"$TMP\"; i=0"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/HibaBenzahra/HibAi-Editing-Studio/skills/hibai-studio/scripts/07_contact_sheet.sh",
+      "line": 58,
+      "excerpt": "rm -rf \"$TMP\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YahyaLendani/motionbrief-claude-skills/skills/motionbrief/SKILL.md",
+      "line": 376,
+      "excerpt": "sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YahyaLendani/motionbrief-claude-skills/skills/motionbrief/SKILL.md",
+      "line": 379,
+      "excerpt": "sudo dnf install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YahyaLendani/motionbrief-claude-skills/skills/motionbrief/SKILL.md",
+      "line": 382,
+      "excerpt": "sudo pacman -S ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YahyaLendani/motionbrief-claude-skills/skills/motionbrief/SKILL.md",
+      "line": 402,
+      "excerpt": "sudo apt install -y libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 \\"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/huypham85/app-3d-video-skill/motion-video/scripts/mv.sh",
+      "line": 31,
+      "excerpt": "rm -rf \"$P/stills\"; SUB=\"${SUB:-1}\" \"$B/render\" \"$P\" --stills \"$F\" >/dev/null"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/rock3r/cav/plugins/cavalry/skills/cavalry/references/install.md",
+      "line": 10,
+      "excerpt": "curl -fsSL https://raw.githubusercontent.com/rock3r/cav/main/install.sh | sh"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/rock3r/cav/plugins/cavalry/skills/cavalry/scripts/install.sh",
+      "line": 3,
+      "excerpt": "#   curl -fsSL https://raw.githubusercontent.com/rock3r/cav/main/install.sh | sh"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/rock3r/cav/plugins/cavalry/skills/cavalry/scripts/install.sh",
+      "line": 35,
+      "excerpt": "trap 'rm -rf \"$tmp\"' EXIT INT TERM"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YeJe-cpu/SeeCut/skill/seecut/SKILL.md",
+      "line": 13,
+      "excerpt": "3. 建工程目录（素材、`build/`、`qc/`、文档都放这里），`cd build && npm i playwright-core`（别 sudo）。"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YeJe-cpu/SeeCut/skill/seecut/references/07-几何规则自检spec.md",
+      "line": 39,
+      "excerpt": "- 跑法：`node scripts/geom-check.mjs <build>`（退出码 0=全绿）；`node scripts/render.mjs <build> probe|full`。工程目录先 `npm i playwright-core`（别 sudo）。"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YeJe-cpu/SeeCut/skill/seecut/scripts/preflight.sh",
+      "line": 12,
+      "excerpt": "TD=$(mktemp -d); PING=$(cd \"$TD\" && perl -e 'alarm 150; exec @ARGV' \"$AGY\" -p \"只回复两个字母：OK\" --new-project --add-dir . --model gemini-3.8-flash-high --dangerously-skip-permissions --print-timeout 120s 2>&1); rm -rf \"$TD\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YeJe-cpu/SeeCut/skill/seecut/scripts/preflight.sh",
+      "line": 30,
+      "excerpt": "node -e \"require.resolve('playwright-core',{paths:['$1']})\" 2>/dev/null && ok \"playwright-core（工程目录）\" || bad \"playwright-core：cd $1 && npm i playwright-core（别 sudo）\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/YeJe-cpu/SeeCut/skill/seecut/scripts/agy_read.sh",
+      "line": 12,
+      "excerpt": "RC=$?; rm -rf \"$D\"; exit $RC"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/luminexlabs-io/antigravity-remotion-skill/.agents/skills/remotion-motion-graphics/SKILL.md",
+      "line": 99,
+      "excerpt": "assumed, no `$(...)`, `export`, `rm -rf`, or `/dev/null`. One command per call is safest."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Science-Prof-Robot/recursive-math-animator/recursive-maths-animator/references/manim_guide.md",
+      "line": 141,
+      "excerpt": "- Clear cache: `rm -rf media/voiceovers/`"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Science-Prof-Robot/recursive-math-animator/recursive-maths-animator/references/manim_guide.md",
+      "line": 399,
+      "excerpt": "sudo apt install fonts-noto-cjk"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Science-Prof-Robot/recursive-math-animator/recursive-maths-animator/scripts/check_environment.py",
+      "line": 156,
+      "excerpt": "print(\"       Linux: sudo apt install fonts-noto-cjk\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/SKILL.md",
+      "line": 44,
+      "excerpt": "If you hit a platform where auto-install fails (locked-down env, no sudo), the orchestrator prints the manual install command per tool and continues degraded. Never abandon the run — degraded output is still better than nothing."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 237,
+      "excerpt": "if (names.apt)    parts.push(`sudo apt-get install -y ${names.apt}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 238,
+      "excerpt": "if (names.dnf)    parts.push(`sudo dnf install -y ${names.dnf}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 239,
+      "excerpt": "if (names.pacman) parts.push(`sudo pacman -S --noconfirm ${names.pacman}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 307,
+      "excerpt": "execFileSync(\"sudo\", [\"apt-get\", \"install\", \"-y\", names.apt], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 315,
+      "excerpt": "execFileSync(\"sudo\", [\"dnf\", \"install\", \"-y\", names.dnf], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/skills/30x-web-to-video/scripts/url-to-video.ts",
+      "line": 323,
+      "excerpt": "execFileSync(\"sudo\", [\"pacman\", \"-S\", \"--noconfirm\", names.pacman], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/SKILL.md",
+      "line": 44,
+      "excerpt": "If you hit a platform where auto-install fails (locked-down env, no sudo), the orchestrator prints the manual install command per tool and continues degraded. Never abandon the run — degraded output is still better than nothing."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 237,
+      "excerpt": "if (names.apt)    parts.push(`sudo apt-get install -y ${names.apt}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 238,
+      "excerpt": "if (names.dnf)    parts.push(`sudo dnf install -y ${names.dnf}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 239,
+      "excerpt": "if (names.pacman) parts.push(`sudo pacman -S --noconfirm ${names.pacman}`);"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 307,
+      "excerpt": "execFileSync(\"sudo\", [\"apt-get\", \"install\", \"-y\", names.apt], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 315,
+      "excerpt": "execFileSync(\"sudo\", [\"dnf\", \"install\", \"-y\", names.dnf], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/norahe0304-art/30x-video/cli/skill/scripts/url-to-video.ts",
+      "line": 323,
+      "excerpt": "execFileSync(\"sudo\", [\"pacman\", \"-S\", \"--noconfirm\", names.pacman], { stdio: \"inherit\" });"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/README.md",
+      "line": 39,
+      "excerpt": "| **ffmpeg** | auto-resolved: system build → `brew` (macOS) → `ffmpeg-static` (no sudo) |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/SKILL.md",
+      "line": 219,
+      "excerpt": "`ffmpeg-static`/`ffprobe-static` packages in `~/.hyperframes-cli` (all platforms, no sudo — **the"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/SKILL.md",
+      "line": 237,
+      "excerpt": "| **ffmpeg** | auto-resolved: system build → `brew` (macOS) → `ffmpeg-static` (no sudo) |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/references/container-capture.md",
+      "line": 23,
+      "excerpt": "&& rm -rf /var/lib/apt/lists/*"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/scripts/setup-render-env.sh",
+      "line": 8,
+      "excerpt": "#                                                   package (all platforms, no sudo), else"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/hub-ki/video-generation/skills/demo-video/scripts/setup-render-env.sh",
+      "line": 115,
+      "excerpt": "# builds per platform, needs no sudo, and installs next to the pinned CLI."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Anshgrover23/product-demo-playbook/skills/product-demo/04-record.md",
+      "line": 44,
+      "excerpt": "flip side is that after a composition change you must `rm -rf out/frames`"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/social-media-skills/remotion-shorts-skill/skills/remotion-shorts-skill/references/platform-specs.md",
+      "line": 62,
+      "excerpt": "sudo apt install -y libnss3 libdbus-1-3 libatk1.0-0 libasound2t64 libxrandr2 libxkbcommon-dev libxfixes3 libxcomposite1 libxdamage1 libgbm-dev libcups2 libcairo2 libpango-1.0-0 libatk-bridge2.0-0"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/social-media-skills/remotion-shorts-skill/skills/remotion-shorts-skill/references/platform-specs.md",
+      "line": 65,
+      "excerpt": "sudo apt install -y libnss3 libdbus-1-3 libatk1.0-0 libgbm-dev libasound2 libxrandr2 libxkbcommon-dev libxfixes3 libxcomposite1 libxdamage1 libpango-1.0-0 libcairo2 libcups2 libatk-bridge2.0-0"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/heygen-com/skills/heygen-avatar/SKILL.md",
+      "line": 92,
+      "excerpt": "**Neither available:** Only if MCP is unavailable AND the CLI doesn't work, tell the user once: \"To use this skill, connect the HeyGen MCP server or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `h"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/heygen-com/skills/heygen-translate/SKILL.md",
+      "line": 71,
+      "excerpt": "5. **Neither** — tell the user once: \"To use this skill, connect the HeyGen MCP server or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`.\""
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/heygen-com/skills/heygen-video/SKILL.md",
+      "line": 95,
+      "excerpt": "5. **Neither** — tell the user once: \"To use this skill, connect the HeyGen MCP server or install the HeyGen CLI: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash` then `heygen auth login`.\""
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/heygen-com/skills/platforms/nanoclaw/heygen/SKILL.md",
+      "line": 14,
+      "excerpt": "- `heygen` CLI — install: `curl -fsSL https://static.heygen.ai/cli/install.sh | bash`. Verify: `heygen auth status`."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/JJenglert1/remotion-claude-video/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "line": 111,
+      "excerpt": "sudo apt update && sudo apt install python3"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/zenitlab/video-as-code/.claude/skills/lifetrail/scripts/new_project.sh",
+      "line": 19,
+      "excerpt": "find \"$DEST\" \\( -name __pycache__ -o -name .pytest_cache \\) -prune -exec rm -rf {} +   # 只清理 DEST 内的缓存"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/zenitlab/video-as-code/references/风格库/guizang/onboarding.md",
+      "line": 37,
+      "excerpt": "sudo apt-get update"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/zenitlab/video-as-code/references/风格库/guizang/onboarding.md",
+      "line": 38,
+      "excerpt": "sudo apt-get install -y ffmpeg python3"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/lemomo-ai/lemo-opuscar/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 41,
+      "excerpt": "git clone --quiet --depth 1 --filter=blob:none --sparse --branch main \"$REPO\" \"$LIB\" || { rm -rf \"$LIB\"; echo \"✗ download failed (offline?)\"; exit 1; }"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/lemomo-ai/lemo-opuscar/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 75,
+      "excerpt": "if [ -n \"$p\" ] && ! kill -0 \"$p\" 2>/dev/null; then rm -rf \"$lock\"; continue; fi"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/lemomo-ai/lemo-opuscar/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 81,
+      "excerpt": "trap 'rm -rf \"$lock\"' EXIT; trap 'exit 1' INT TERM HUP"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/lemomo-ai/lemo-opuscar/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 99,
+      "excerpt": "[ ! -e .venv ] || .venv/bin/python -c pass 2>/dev/null || { echo \"! $LIB/.venv is broken; making it again\"; rm -rf .venv; }"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FireRedTeam/FireRed-OpenStoryline/.claude/skills/openstoryline-install/SKILL.md",
+      "line": 55,
+      "excerpt": "sudo apt-get update"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/FireRedTeam/FireRed-OpenStoryline/.claude/skills/openstoryline-install/SKILL.md",
+      "line": 56,
+      "excerpt": "sudo apt-get install -y ffmpeg wget unzip"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/dauletbekalim/motion-ui-videos/skills/motion-ui-videos/references/pitfalls.md",
+      "line": 454,
+      "excerpt": "rm -rf \"${TMPDIR:-/tmp}\"/remotion-webpack-bundle-*"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smit-vanani/claude-promo-video/skills/promo-video/scripts/setup.sh",
+      "line": 28,
+      "excerpt": "apt)    sudo apt-get update -qq && sudo apt-get install -y \"$pkg\" ;;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smit-vanani/claude-promo-video/skills/promo-video/scripts/setup.sh",
+      "line": 29,
+      "excerpt": "dnf)    sudo dnf install -y \"$pkg\" ;;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/smit-vanani/claude-promo-video/skills/promo-video/scripts/setup.sh",
+      "line": 30,
+      "excerpt": "pacman) sudo pacman -S --noconfirm \"$pkg\" ;;"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/klsoen/opus-js-animations/skills/opus-js-animations/scripts/get_audio.py",
+      "line": 111,
+      "excerpt": "sys.exit('ffmpeg is required: macOS `brew install ffmpeg`, Debian/Ubuntu `sudo apt install ffmpeg`, '"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/abhinavshrivastava950/Montara/.agents/skills/hyperframes/PROVENANCE.md",
+      "line": 45,
+      "excerpt": "rm -rf .agents/skills/hyperframes .agents/skills/hyperframes-cli \\"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/abhinavshrivastava950/Montara/.agents/skills/video-edit/SKILL.md",
+      "line": 22,
+      "excerpt": "sudo apt update && sudo apt install -y ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/aaitor/skill-video-studio/.claude/skills/devrel-video/references/production-notes.md",
+      "line": 80,
+      "excerpt": "stop it (e.g. `sudo systemctl stop ollama`; the TTS server is separate, unaffected) and restart"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/aaitor/skill-video-studio/.claude/skills/devrel-video/scripts/variant.sh",
+      "line": 43,
+      "excerpt": "ssh -o ConnectTimeout=45 \"$HOST\" 'sudo systemctl stop ollama' >/dev/null 2>&1 || true"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/aaitor/skill-video-studio/.claude/skills/devrel-video/scripts/variant.sh",
+      "line": 46,
+      "excerpt": "ssh -o ConnectTimeout=45 \"$HOST\" 'sudo systemctl start ollama' >/dev/null 2>&1 || true"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/packages/hyperframes/plugin/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 309,
+      "excerpt": "rm -rf \"$FG_SHADOW\" && mkdir -p \"$FG_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/packages/hyperframes/plugin/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 323,
+      "excerpt": "rm -rf \"$FG_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/packages/hyperframes/plugin/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 332,
+      "excerpt": "BASE_SHADOW=\"$PROJECT/_base_shadow\"; rm -rf \"$BASE_SHADOW\"; mkdir -p \"$BASE_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/packages/hyperframes/plugin/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 335,
+      "excerpt": "RAIL_SHADOW=\"$PROJECT/_rail_shadow\"; rm -rf \"$RAIL_SHADOW\"; mkdir -p \"$RAIL_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/packages/hyperframes/plugin/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 346,
+      "excerpt": "rm -rf \"$BASE_SHADOW\" \"$RAIL_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/haxzie/genmotion/.claude/skills/templates/SKILL.md",
+      "line": 275,
+      "excerpt": "1. `rm -rf packages/templates/catalog/<id>/` — delete the old copy entirely."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif-create/SKILL.md",
+      "line": 156,
+      "excerpt": "rm -rf /tmp/claude-gif/frames/"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif-optimize/SKILL.md",
+      "line": 222,
+      "excerpt": "| gifsicle: no such file | gifsicle not installed | `sudo apt install gifsicle` |"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif-convert/SKILL.md",
+      "line": 291,
+      "excerpt": "rm -rf /tmp/claude-gif/svg_frames /tmp/claude-gif/capture_svg.js /tmp/claude-gif/palette.png"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/setup.sh",
+      "line": 49,
+      "excerpt": "check_tool \"ffmpeg\" \"ffmpeg\" \"sudo apt install -y ffmpeg\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/setup.sh",
+      "line": 50,
+      "excerpt": "check_tool \"gifsicle\" \"gifsicle\" \"sudo apt install -y gifsicle\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/setup.sh",
+      "line": 53,
+      "excerpt": "check_tool \"convert\" \"convert\" \"sudo apt install -y imagemagick\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/check_deps.sh",
+      "line": 22,
+      "excerpt": "ENTRIES+=(\"$(json_entry \"ffmpeg\" \"false\" \"\" \"sudo apt install ffmpeg\")\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/check_deps.sh",
+      "line": 30,
+      "excerpt": "ENTRIES+=(\"$(json_entry \"gifsicle\" \"false\" \"\" \"sudo apt install gifsicle\")\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/AgriciDaniel/claude-gif/skills/claude-gif/scripts/check_deps.sh",
+      "line": 72,
+      "excerpt": "ENTRIES+=(\"$(json_entry \"imagemagick\" \"false\" \"\" \"sudo apt install imagemagick\")\")"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/imMamdouhaboammar/motion-graphics-skills/skills/video-style-cloner/references/runtime.md",
+      "line": 14,
+      "excerpt": "sudo apt install python3.12 python3.12-venv"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/imMamdouhaboammar/motion-graphics-skills/skills/video-style-cloner/references/runtime.md",
+      "line": 29,
+      "excerpt": "sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/yammaku/typewriter-video/_root/SKILL.md",
+      "line": 271,
+      "excerpt": "rm -rf /tmp/MechSim"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/yammaku/typewriter-video/_root/SKILL.md",
+      "line": 286,
+      "excerpt": "rm -rf /tmp/geist-font /tmp/geist-pixel.zip"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/yammaku/typewriter-video/_root/SKILL.md",
+      "line": 306,
+      "excerpt": "rm -rf /tmp/MechSim"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/actionow-ai/vvv/skills/vvv/vendor/bdpan/scripts/uninstall.sh",
+      "line": 136,
+      "excerpt": "rm -rf \"$CONFIG_DIR\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/actionow-ai/vvv/skills/vvv/vendor/bdpan/reference/troubleshooting.md",
+      "line": 363,
+      "excerpt": "sudo apt-get install libc6"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/actionow-ai/vvv/skills/vvv/vendor/bdpan/reference/troubleshooting.md",
+      "line": 366,
+      "excerpt": "sudo dnf install glibc"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/neelnanda-io/dont-go-quiet-on-me/skills/making-explainer-videos/manim-gotchas.md",
+      "line": 49,
+      "excerpt": "- TinyTeX is a user install, no sudo:"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/neelnanda-io/dont-go-quiet-on-me/skills/making-explainer-videos/manim-gotchas.md",
+      "line": 50,
+      "excerpt": "- Install: `curl -sL https://yihui.org/tinytex/install-bin-unix.sh | sh`."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/qa/troubleshooting.md",
+      "line": 74,
+      "excerpt": "sudo apt-get update && sudo apt-get install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/docs/installation.md",
+      "line": 46,
+      "excerpt": "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/docs/installation.md",
+      "line": 91,
+      "excerpt": "sudo apt update && sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/docs/installation.md",
+      "line": 94,
+      "excerpt": "sudo yum install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/docs/installation.zh-CN.md",
+      "line": 44,
+      "excerpt": "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/gloweaseco-leo/hyperdirector/hyperdirector/docs/installation.zh-CN.md",
+      "line": 81,
+      "excerpt": "sudo apt update && sudo apt install ffmpeg"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/cblain100-prog/motion-design-claude-code/.claude/skills/motion-design/references/variants.md",
+      "line": 24,
+      "excerpt": "cp -R <project> <project>-nuit && rm -rf <project>-nuit/renders <project>-nuit/snapshots <project>-nuit/.hyperframes"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/alireza12t/foldline/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 39,
+      "excerpt": "git clone --quiet --depth 1 --filter=blob:none --sparse --branch main \"$REPO\" \"$LIB\" || { rm -rf \"$LIB\"; echo \"✗ download failed (offline?)\"; exit 1; }"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/alireza12t/foldline/plugin/skills/lemo-opuscar/scripts/setup.sh",
+      "line": 74,
+      "excerpt": "[ ! -e .venv ] || .venv/bin/python -c pass 2>/dev/null || { echo \"! $LIB/.venv is broken; making it again\"; rm -rf .venv; }"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pyang5166/gbro-collage-broll/_root/SKILL.md",
+      "line": 41,
+      "excerpt": "macOS：`brew install ffmpeg`；Debian/Ubuntu：`sudo apt install ffmpeg`。"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/muayadjamal/flow-video-recorder/_root/SKILL.md",
+      "line": 244,
+      "excerpt": "ls ~/.maestro/bin/maestro || curl -Ls \"https://get.maestro.mobile.dev\" | bash"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/muayadjamal/flow-video-recorder/_root/SKILL.md",
+      "line": 247,
+      "excerpt": "`sudo xcodebuild -license accept` themselves**; suggest they type it with a"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/ChrisHKAI/ChrisHKAI-Video/skills/creator-toy-intro/references/onboarding.md",
+      "line": 45,
+      "excerpt": "(`curl -fsSL https://x.ai/cli/install.sh | bash`, a few MB), on their yes."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/patryk-penczek/ship-video/skills/ship-video/references/render.md",
+      "line": 55,
+      "excerpt": "- Delete with absolute paths and guarded variables (`rm -rf \"${D:?}\"`)."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/paper-cutout/scripts/new_project.sh",
+      "line": 9,
+      "excerpt": "if command -v rsync >/dev/null; then rsync -a --exclude node_modules --exclude out \"$SKILL_DIR/template/\" \"$TARGET/\"; else cp -R \"$SKILL_DIR/template/.\" \"$TARGET/\"; rm -rf \"$TARGET/node_modules\" \"$TARGET/out\"; fi   # Git Bash on Windows has"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/pixel-art/scripts/new_project.sh",
+      "line": 9,
+      "excerpt": "if command -v rsync >/dev/null; then rsync -a --exclude node_modules --exclude out \"$SKILL_DIR/template/\" \"$TARGET/\"; else cp -R \"$SKILL_DIR/template/.\" \"$TARGET/\"; rm -rf \"$TARGET/node_modules\" \"$TARGET/out\"; fi   # Git Bash on Windows has"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/anime-cel/scripts/new_project.sh",
+      "line": 9,
+      "excerpt": "if command -v rsync >/dev/null; then rsync -a --exclude node_modules --exclude out \"$SKILL_DIR/template/\" \"$TARGET/\"; else cp -R \"$SKILL_DIR/template/.\" \"$TARGET/\"; rm -rf \"$TARGET/node_modules\" \"$TARGET/out\"; fi   # Git Bash on Windows has"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/whiteboard/scripts/new_project.sh",
+      "line": 9,
+      "excerpt": "if command -v rsync >/dev/null; then rsync -a --exclude node_modules --exclude out \"$SKILL_DIR/template/\" \"$TARGET/\"; else cp -R \"$SKILL_DIR/template/.\" \"$TARGET/\"; rm -rf \"$TARGET/node_modules\" \"$TARGET/out\"; fi   # Git Bash on Windows has"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 309,
+      "excerpt": "rm -rf \"$FG_SHADOW\" && mkdir -p \"$FG_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 323,
+      "excerpt": "rm -rf \"$FG_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 332,
+      "excerpt": "BASE_SHADOW=\"$PROJECT/_base_shadow\"; rm -rf \"$BASE_SHADOW\"; mkdir -p \"$BASE_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 335,
+      "excerpt": "RAIL_SHADOW=\"$PROJECT/_rail_shadow\"; rm -rf \"$RAIL_SHADOW\"; mkdir -p \"$RAIL_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/edenfunf/reelmimic/.claude/skills/embedded-captions/scripts/render-and-composite.sh",
+      "line": 346,
+      "excerpt": "rm -rf \"$BASE_SHADOW\" \"$RAIL_SHADOW\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/manoletre/explainer-video/_root/SKILL.md",
+      "line": 160,
+      "excerpt": "`sudo apt install mesa-vulkan-drivers` (lavapipe draws on the CPU)."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/tmoody1973/pasteup/skills/pasteup/references/user-guide.md",
+      "line": 34,
+      "excerpt": "3. Make sure ffmpeg is installed (`ffmpeg -version` to check; on Mac `brew install ffmpeg`, on Ubuntu `sudo apt install ffmpeg`)."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/SKILL.md",
+      "line": 26,
+      "excerpt": "- If a tool cannot be installed automatically (no sudo/package manager), tell the user the exact command to run and stop."
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 25,
+      "excerpt": "SUDO=\"\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 26,
+      "excerpt": "if [[ $(id -u) -ne 0 ]] && have sudo; then SUDO=\"sudo\"; fi"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 31,
+      "excerpt": "elif have apt-get; then $SUDO apt-get update -y && $SUDO apt-get install -y \"$@\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 32,
+      "excerpt": "elif have dnf; then $SUDO dnf install -y \"$@\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 33,
+      "excerpt": "elif have pacman; then $SUDO pacman -Sy --noconfirm \"$@\""
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/setup.sh",
+      "line": 51,
+      "excerpt": "elif have apt-get; then curl -fsSL https://deb.nodesource.com/setup_22.x | $SUDO bash - && $SUDO apt-get install -y nodejs"
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/reelkit/heygenkit.py",
+      "line": 74,
+      "excerpt": "\"install_hint\": f\"Instale com: curl -fsSL {INSTALL_URL} | bash   (ou rode: heditor heygen connect --install)\","
+    },
+    {
+      "severity": "review",
+      "rule": "remote installer piped to shell",
+      "file": "library/pycodebr/heditor/skills/heditor/scripts/reelkit/heygenkit.py",
+      "line": 131,
+      "excerpt": "\"install_hint\": f\"Install with: curl -fsSL {INSTALL_URL} | bash   (or run: heditor heygen connect --install)\","
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Hainrixz/video-editor-architect/.claude/skills/empezar/SKILL.md",
+      "line": 24,
+      "excerpt": "The installer (`herramientas/instalar.ts`, also `npm run instalar`) checks the machine with the same checks as the doctor and installs only what is missing: ffmpeg, uv and the Python `.venv`, whisper.cpp and its models, yt-dlp, Chrome and P"
+    },
+    {
+      "severity": "review",
+      "rule": "destructive or privileged command",
+      "file": "library/Hainrixz/video-editor-architect/.claude/skills/empezar/SKILL.md",
+      "line": 26,
+      "excerpt": "2. **Explain the plan in their language**, short: what it will install, with which command (Homebrew on macOS, winget on Windows), and how much it downloads. Always say the big one out loud: the whisper large-v3 model is **about 3.1 GB** (t"
+    }
+  ]
+}

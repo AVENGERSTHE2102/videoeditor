@@ -1,0 +1,208 @@
+# Video-generation providers (any MCP)
+
+AI clips come from whatever video-generation MCP server the user has connected: Hedra, a Runway, Luma,
+Kling, Replicate or fal server, or anything else that renders video. The skill works only
+through the tools the connected MCP exposes. If no video MCP is connected, the video is archive-only,
+unless the user asks for a provider's web app to be used instead ("Providers without an MCP" below).
+
+## Find out what the provider can do
+
+Find the tools with ToolSearch ("video", "generate", "image", "upload", "asset", the provider's name).
+Read each tool's description and, where the MCP offers one, its model list or model details tool. Note
+for each candidate model:
+
+- inputs: text only, a start frame (image to video), reference images for identity, reference video
+  or audio, and whether start frame and references can be combined
+- durations, resolutions and aspect ratios; whether generated audio can be turned off
+- price per second or per clip, and the tools for balance and estimates
+- how jobs report progress, how outputs come back (a URL, an asset id), and how long URLs stay valid
+- content rules that block prompts
+
+Prefer the provider's own numbers over anything written here.
+
+## Getting local files to the provider
+
+Reference photos and keyframes usually live on the user's disk. Try these in order:
+
+1. An MCP tool that uploads a local file directly.
+2. A file picker the MCP shows in hosts that support it.
+3. The user uploads the files to the provider's own library or web app (the MCP often links to it),
+   and you find them with the MCP's asset or library search tool.
+4. A public URL the user already hosts the file at, passed to a tool that accepts URLs.
+
+Use only the MCP's tools and the user's own uploads; don't write scripts that call the provider's API
+directly. If none of these routes exist,
+say so and ask the user how they want to provide the files.
+
+## Getting outputs back
+
+Download each finished clip from the URL the provider returns with
+`python3 -I mv/scripts/fetch_clip.py mv/clips/<CODE>.mp4 URL` (stills to `mv/keyframes/`). Presigned
+URLs are long and break when retyped: write the URL to a file exactly as returned and pass `@file`.
+Download soon after a job finishes, since presigned URLs expire. If the MCP has its own download or
+export tool that writes local files, that works too.
+
+## Jobs, money and errors
+
+- Generation is usually asynchronous. Poll the status tool at the interval it asks for, and wait in
+  the background between checks rather than polling in a tight loop. Never resubmit a job just to check
+  on it; reuse an idempotency key if the provider has one.
+- Write each job id into `mv/NOTES.md` as you submit it, with its clip code and prompt, so a lost
+  context can recover the jobs.
+- Failed jobs are usually free; completed takes you reject still cost. Record both in the budget ledger
+  (`budget.py add`).
+- Prompts with sensual wording in close-ups get blocked by some providers. Rephrase plainly and keep
+  the same references.
+- Validation errors usually list the allowed values; fix and resubmit.
+
+## Method that carries over between providers
+
+- **Real person from a photo:** identity has to come from the actual photo through the model's
+  reference-image mode (the full portrait plus a tight face crop, optionally a scene or outfit still).
+  Animating a generated keyframe of a real person tends to produce a different face, and image models
+  drift faces toward a generic look. One test clip first; the user judges the face.
+- **Masked or invented character:** generate a keyframe still (cheap), check it, then animate from it
+  as the start frame. Say in the prompt that the mask stays exactly the same and no face is shown.
+- **Inventory the angles before generating more.** Make a contact sheet of the performer clips you
+  already have (`contact.py`) and list each one's angle and size. Spend credits on the angles that are
+  missing (profile, from behind, overhead, low, wide) rather than another frontal close-up: a video cut
+  from one angle feels monolithic however good each clip is.
+- **Prompt pattern for a person from references:**
+  > The person is the one in [image 1] and [image 2]: their face, face shape, eyes, nose, lips, skin and
+  > hair must match those photos exactly in every frame. [Image 3] shows the scene, framing, lighting and
+  > outfit. [What they do, where]. [Camera angle, e.g. low angle from the side, or from behind], [shot
+  > size, e.g. medium-wide from the knees up], [camera move]. [Light and atmosphere]. [Film or video look].
+
+  Name the angle and the move explicitly; left out, the model defaults to a frontal medium shot. Say
+  "face toward the camera" only when the shot needs the face.
+- **Don't build a story beat on a prompt's last action.** Models often drop the final action of a
+  clip ("in the last seconds the car pulls away" can simply not happen). Give a payoff its own
+  shot, or cut the story so it works without it.
+- Turn generated audio off; the song replaces it. Ask for the resolution the user chose (480p saves
+  credits; the compositor upscales).
+
+## Lipsync (performance shots)
+
+Only when the user asks for it. Two routes exist on most providers:
+
+- **A video model that takes reference audio.** Pass the singer's photos as references and a black video
+  carrying the exact slice of the song's vocal as reference video, with generated audio on and a prompt
+  that says to use that audio. Make the slice with
+  `.venv/bin/python mv/scripts/lipsync_slice.py CODE FIRST_WORD_TIME SECONDS --audio <vocal stem>`
+  and get `mv/work/slices/CODE.mp4` to the provider like any other local file.
+- **Avatar or talking-photo models:** a portrait plus an audio file, often minutes long and cheap per
+  second. Good for whole verses on one setup; less camera movement.
+
+**The slice decides the take.** What worked, on 21 takes of one video:
+
+- The separated vocal alone (SKILL.md Phase 2), not the mix: the model copies a clean vocal exactly
+  (similarity 0.9 and up against the stem) and has nothing else to mouth.
+- `FIRST_WORD_TIME` is a line start from `mv/data/lyrics.json`, transcribed from that vocal. The slice
+  then starts in the gap 0.3-0.6 s before the word. A slice that opens inside the previous line makes
+  the take start on a cut word and pushes its own last words out of the take.
+- Nothing muted. Silencing other voices or the neighbouring lines inside the slice cost the takes
+  their line endings; choose slice edges that fall in gaps instead.
+- Whole lines only: `lipsync_slice.py` warns when the slice ends before a line does and says which
+  length would hold it. Two lines per take (6-8 s) is a good unit; the edit can punch in on the second.
+- Spoken lines by another voice (a second character, a caller) sit in the stem too. Leave them out
+  of a take by where the slice starts and ends, and put that speaker on screen some other way.
+
+Mouths follow the clip's own audio, which is not always exactly where you asked. First
+`.venv/bin/python mv/scripts/conform.py mv/clips/L1.mp4` (a misstated frame rate shifts every mouth),
+then for each lipsync clip
+run `.venv/bin/python mv/scripts/sync_offset.py mv/clips/L1.mp4 --save` to find the song time where its
+audio starts and record it in `mv/data/mouths.json`, then place it with `S("L1", 0, beats, sync=<that
+time>)`; the EDL computes the in-point. A take from a `lipsync_slice.py` slice is matched against the
+audio its slice was cut from, near the slice's time; expect it within about 0.1 s of the slice start.
+Under 0.4 similarity the script saves nothing: listen to the take, and make it again if the line is
+re-sung or garbled. Windows that disagree in the sync report mean drift there:
+start that cut later or nudge `sync` per cut.
+
+A source's mouth can also sit off its own audio: footage that has been downloaded, re-encoded or edited
+sometimes carries an offset, and `sync` alone then places every shot exactly as wrong as the file. Set
+one only when the user sees the source itself play out of sync; an existing music video the user sees in
+sync needs none. `lip_check.py CODE T1 T2 T3` writes frame-by-frame mouth strips labelled with the song
+time and the word Whisper hears there (its word timings can be a third of a second off on sung vocals,
+so the strips guide, they don't prove); `lip_check.py CODE --save SECONDS` stores the offset as
+`"av_offset"` under the file's name in `mv/data/mouths.json`, and `edl.py` applies it to every `sync`
+shot of that file, on top of `sync`:
+`{"perf_take.mp4": {"av_offset": 0.2}, "L1": {"sync": 62.48, "safe": [[8.5, 10.0]]}}`. SKILL.md
+Phase 6, "Lip sync".
+
+**A singing take is shown only at the song time it was recorded for.** Repeated lines are rarely
+phrased the same: a chorus take reused on a later chorus or a drop line looks wrong on screen even when
+the words repeat. Any other shot of the singer needs the mouth closed or out of view (from behind, a
+silhouette, tiny in frame). So:
+
+- Budget one take per line that is sung on screen. Drops and instrumental stretches get dancing or
+  performance shots with no singing; slices dominated by a drop (loud kick, little vocal) tend not to
+  sync at all.
+- Check the stretches between lines. Generated takes don't reliably close the mouth when the vocal
+  stops, and the user's own performer footage can contain talking or singing. `mouth_check.py` tiles
+  mouth crops over time (`mouth_check.py mv/work/mouths.jpg L1:0-10 P3:4-12`); record each clip's
+  closed or hidden stretches as `"safe"` ranges in clip seconds in `mv/data/mouths.json`:
+  `{"L1": {"sync": 62.48, "safe": [[8.5, 10.0]]}, "P3": {"safe": [[0, 3.2]]}}`.
+- `edl.py` warns about every shot of a clip in `mouths.json` that is neither shown at its recorded sync
+  nor inside a safe range. `vocal_match.py` compares the separated vocal where a take was recorded with
+  where it plays, as a second check, or (`--pair`) before you assume two lines match.
+
+## Example: Hedra
+
+Notes from using Hedra's MCP (`mcp__hedra__*`) in October 2026; check `list_models` and `get_model`
+for current models and prices. It bills a workspace credit pool (`get_balance`, `estimate`).
+
+| Use | Model | Mode | Cost at 480p |
+|---|---|---|---|
+| Real person from a photo | `seedance-25` (Seedance 2.5) | reference images (up to 30), no start frame | about 20.8 credits/s; durations 4-30 s |
+| Masked or invented character | `seedance-20` (Seedance 2.0) | start frame (`start_keyframe_id`) | 22.5 credits/s standard, 18 fast; durations 4-15 s |
+| Scene or outfit still | `nano-banana-pro` | references, needs `resolution` "1K"/"2K"/"4K" | 15 credits at 2K |
+| Keyframe of a masked character | `gpt-image-2` | references | 8-11 credits |
+
+- Both Seedance models reject a start frame combined with reference images, so a real person goes
+  through reference mode.
+- Lipsync: Seedance 2.5 accepts reference video with audio (up to 30 s; 15 s for 2.0); avatar models
+  include `hedra-character-3`, `omnihuman-20` and `kling-ai-avatar-v2`. Seedance doesn't reliably close
+  the mouth between sung lines: of three takes with a 3.5 s instrumental gap, one kept mouthing through
+  it. A slice dominated by a drop came back with the model's own audio and a mouth that matched nothing,
+  while vocal-led slices synced exactly. Check every take with `sync_offset.py` and `mouth_check.py`.
+- Seedance 2.5 can skip the last action in a prompt; keep story payoffs in their own shot.
+- Local files: `upload_file` takes a public URL only. `show_file_upload_widget` shows a picker in hosts
+  that support it; in a terminal it returns a link to the Hedra library, where the user uploads the
+  files, and `query_assets` then finds them.
+- Outputs: `get_generations` returns presigned URLs of about 1,700 characters; download them with
+  `fetch_clip.py` and `@file`. Up to 4 jobs per status call; a 10-15 s Seedance clip takes about 3-8
+  minutes; keep at most 20 jobs in flight.
+
+## Providers without an MCP
+
+Some users generate in a provider's web app (Dreamina, a studio page) on their own account. Use one
+only when the user asks for it, and work the way they choose:
+
+- **Hand-off folders.** One folder per take in `mv/handoff/NN_CODE/` with everything that take needs,
+  named in upload order (`Image1_face.png`, `Image2_outfit.png`, `Image3_place.png`,
+  `Video1_slice.mp4`), `prompt.txt` and `settings.txt` (model, resolution, aspect, seconds, audio on or
+  off), plus an `INDEX.md` listing every take. The user uploads and submits; downloads go through
+  `conform.py` and, for singing takes, `sync_offset.py --save`.
+- **Driving the user's browser**, only with their explicit permission for that site, in the tab they
+  open. Submit one test take, let the user judge it, then the batch. Keep a per-take log of what was
+  submitted, so a failed or refunded job is retried once and never double-submitted.
+
+## Example: Dreamina (web app)
+
+Notes from one video in November 2026 (Seedance 2.5, 720p, 43 clips); check the app for current
+models and prices.
+
+- Cost: 29 credits/s with image references only, 58 credits/s with a reference video (so every
+  lip-sync take costs double). Failed generations were refunded.
+- References are objects in the prompt box, not text: typing "@Image1" does nothing. Each uploaded
+  file has to be picked from the mention list so it becomes a reference tag, and the prompt then
+  refers to the tags ("the woman in @Image1 wearing the outfit in @Image2 in the place in @Image3,
+  singing the audio of @Video1").
+- Downloads state 60 fps and hold 24 fps frames with uneven gaps: run `conform.py` on every file.
+  Files fetched from the Assets page carry no "AI" badge.
+- Batch download from Assets (select several, Download) arrives as one zip after a delay that can
+  run to 20 minutes; a single clip downloads as a plain mp4. Match files to takes by kind and length.
+- A take that failed four times with one place reference passed at once with another. Change the
+  references or the prompt after the second failure.
+- Seedance 2.5 started each take on the slice's true first word even when the slice was cut badly,
+  so sync held; what a bad slice loses is the end of the line.

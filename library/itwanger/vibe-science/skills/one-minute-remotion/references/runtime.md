@@ -1,0 +1,152 @@
+# 可移植制作流程
+
+配套运行时随 VibeScience 一起提供，不依赖作者的其他仓库。先运行 Skill 内的 `scripts/locate_workspace.py` 定位仓库，再按[环境配置](../../../docs/setup.md)安装依赖。`video/shared/config/video.config.example.json` 只包含非敏感默认值；用户音色写入被忽略的本地配置，凭据仅从环境变量读取。项目初始化会冻结一份配置，修改共享默认值不改变旧项目。
+
+公开的 `pythagorean-demo` 是可播放的无声样例，保留已认可画面与字幕时点。它不是完整音频工程，不能直接当成待配音的新项目或已验收成片。新主题从初始化开始。配音阶段需自己的可用火山 TTS 音色、凭据、ffmpeg；逐词审校还需可用的 MLX Audio 环境。MLX 方案主要面向 Apple Silicon，其他机器需要自行适配对齐器，不能宣称开箱即用。
+
+“下一步”只推进一个阶段。配音完成后交付完整音频并停下供试听，分镜、动画和出片分别继续。
+
+## 新项目与文字固定
+
+文字稿保存在发行仓库的 `one-minute/<topic>.md`，制作项目保存在 `video/one-minute-<topic>/`。先保存完整稿件，同名文件先检查，不覆盖现有项目。下列命令按阶段执行；不要一次运行到底。
+
+以下环境变量是路径示例。将 `VIBE_ROOT` 改为自己的克隆位置，`TOPIC`、`TITLE` 改为当前主题。Skill 通过符号链接安装时，`locate_workspace.py` 会返回真实发行仓库；复制安装时需设置 `VIBE_SCIENCE_HOME`。
+
+```bash
+VIBE_ROOT="/path/to/vibe-science"
+TOPIC="buoyancy"
+TITLE="浮力"
+SHARED_VIDEO="$VIBE_ROOT/video/shared"
+MINUTE_SKILL="$VIBE_ROOT/skills/one-minute-remotion"
+SOURCE="$VIBE_ROOT/one-minute/$TOPIC.md"
+PROJECT="$VIBE_ROOT/video/one-minute-$TOPIC"
+
+python3 "$SHARED_VIDEO/tools/init_project.py" \
+  --project "$PROJECT" --source "$SOURCE" --title "$TITLE"
+python3 "$SHARED_VIDEO/tools/doctor.py" --project "$PROJECT"
+```
+
+初始化不会调用TTS，不覆盖已有项目。已有 `one-minute-<topic>` 时先检查内容和进度，续做或采用新版本目录，不能覆盖用户改动。
+
+将统一目录中的稿件完整快照为项目 `script.md`；`SOURCE` 和锁文件源路径仍指向统一目录中的稿件。明确提取可朗读正文为 `spoken.txt`；创建 `beats.json`，通常使用一个内部章节 `ch1`，按完整意群拆分。内部章节用于时间轴，不意味着画面必须展示多章导航。
+
+若用户指定沿用某一期声音，先把该期 `config.tts` 中的声音与语速设置复制到当前项目，再锁定。不打印凭证或完整环境。默认继承共享声音配置，包含已有速度设置；不为赶时长额外改 `speedRatio` 或 `atempo`。如果用户明确要求正常原速，再只修改当前项目并记录，不能改共享默认值。
+
+```bash
+python3 "$MINUTE_SKILL/scripts/one_minute.py" lock \
+  --project "$PROJECT" --source "$SOURCE" --spoken "$PROJECT/spoken.txt"
+```
+
+该命令只记录源文件、口播与项目所选声音的哈希/配置；不合成语音。源稿或声音经用户同意更新时，先保存旧锁文件和修改说明，再明确使用 `--replace`。不为使检查通过而重新锁定未经同意的改稿。
+
+## 音频与实测时长
+
+```bash
+python3 "$SHARED_VIDEO/tools/pronunciations.py" --project "$PROJECT" --write
+python3 "$SHARED_VIDEO/tools/gen_audio.py" --project "$PROJECT" --dry-run
+python3 "$SHARED_VIDEO/tools/gen_audio.py" --project "$PROJECT"
+python3 "$SHARED_VIDEO/tools/gen_cues.py" --project "$PROJECT"
+python3 "$SHARED_VIDEO/tools/review_audio.py" --project "$PROJECT"
+python3 "$MINUTE_SKILL/scripts/one_minute.py" check --project "$PROJECT"
+```
+
+用户要求制作视频时，现有语音服务的调用属于该制作流程；凭证缺失只报告缺失的环境变量名，不输出变量值。API Key 仅由项目 `config.volc.apiKeyEnv` 引用。只读取当前进程的环境变量，不自动读取 `.env`，不把密钥放进命令参数或提交到仓库。
+
+`check` 返回0仅表示当前阶段的机械检查通过；返回1表示文字、声音配置、无效媒体或时间轴一致性等失败；返回2表示缺少实际音频/时间轴。目标时长在 `lock` 时写入锁文件，默认 `--target-sec 120`；2026-10-31 之前锁定的项目（如 RRF）保留当时记录的60秒。超过目标是提醒，以 `warnings` 和 `overTargetSec` 报告，不单独导致失败。字数、估算时点和草图预览不能替代实测；报告通过时仍须披露超时提醒，不能声称已经达成时长目标。
+
+完整意群保留原文，`text` 与口播投影一致。`ttsText` 可按读音词典改变读法，字幕仍用原文，不得借此替换解释内容。ASR与实际试听检查漏读、重复及缩写读音；没有试听就不宣称音色/读音已验收。
+
+单阶段模式在此结束：提供可播放的完整音频（本机默认 `build/voiceover.wav`）、绝对文件路径、实测时长、超时提醒和待核对项，记录“配音已生成，待用户试听”后结束本轮。不得顺手写 `OUTLINE.md`、启动动画预览或后台渲染。用户再次说“下一步”时才开始分镜设计，分镜交付后再次停下。
+
+### 读音短样本与局部替换
+
+用户指出读音问题时先核对共享读音词典及已认可的完整句子，不把ASR写出字母当作发音验收。数学字母按英文读音处理；C是 `/siː/`，与see同音，不能直接把中文“西”当作精确读法。当前接口及音色适用时可用单元级SSML指定音素，例如：
+
+```xml
+<speak>斜边记作 <phoneme alphabet="cmu" ph="S IY1">C</phoneme>。</speak>
+```
+
+这是C的音素写法，不是要求把每个字母都写成同一个音；其他字母分别核对。`ttsText`保留对应的纯文本，SSML去标签后逐字一致，字幕仍显示源稿的字母大小写。不同模型、音色或新句子仍需复听。
+
+用户要求“先生成一小段，确认后再替换”时，样本沿用项目的音色、模型和语速，覆盖目标词的实际上下文，保存到项目 `preview/` 的独立子目录；不覆盖正式beats、整条配音或时间轴。交付可播放音频，并记录输入、音素、音频哈希及“待用户试听”。用户认可后才执行后续替换。
+
+替换时先备份受影响的完整意群及生成记录，扫描全片的同一目标词；只修改这些单元的`ttsText/ttsSsml`，不拼接孤立字母，不改源稿或字幕正文。用现有工具重合成并重建：
+
+```bash
+python3 "$SHARED_VIDEO/tools/gen_audio.py" --project "$PROJECT" --only <受影响的ID列表>
+python3 "$SHARED_VIDEO/tools/gen_cues.py" --project "$PROJECT"
+python3 "$SHARED_VIDEO/tools/review_audio.py" --project "$PROJECT" --chapter ch1 --only <受影响的ID列表>
+python3 "$SHARED_VIDEO/tools/build_timing.py" --project "$PROJECT" --chapter ch1
+```
+
+ID占位符换为实际整数列表，不直接执行示例。共享工具负责调用接口，密钥仍只从项目指定的环境变量读取。核对未修改单元的音频哈希保持相同，将用户认可的完整样本与适用音色记录到读音词典；不要给单个字母添加无语境的全局自动替换。样本认可、整句合成和整条复听是不同状态。
+
+配音改动后的动画同步见下方；画面返修中获得的局部配音授权不等于授权导出MP4。
+
+## Remotion画面
+
+在用户已拿到分镜并再次推进到动画阶段，或明确要求连续出片时执行本段。单阶段模式的分镜阶段只写 `OUTLINE.md`，不执行下面的场景实现和预览命令。
+
+先根据实际对齐生成本条 `ch1-spec.json` 与时点，再写场景。保留共享字幕与音轨接口，外层Stage可按短片需要定制，取消长片多章导航。无需复制旧片的主题数据、台词、封面或头像；素材使用和版式按当前内容决定。
+
+画面用 `useCurrentFrame()` 读取帧，按真实语音事件编排。主题、字号和字幕安全区按[视觉规范](visual-style.md)在项目内统一定义；自定义字幕至少保留底部约180px，按实际字面与阴影检查48–64px阅读间距。字幕单行48px，长句在`ch1-spec.json`按完整语义重新分组并重新运行`build_timing.py`；每个beat的字幕拼接必须严格等于原文，分组不要求重新合成配音。屏幕文字与字幕分离；图片有需要时按用户可用的图片工具，只提供当前分镜关键词和用户参考图。
+
+```bash
+python3 "$SHARED_VIDEO/tools/build_timing.py" --project "$PROJECT" --chapter ch1
+python3 "$SHARED_VIDEO/tools/chapter_pipeline.py" --project "$PROJECT" --chapter ch1
+node "$SHARED_VIDEO/tools/remotion.mjs" typecheck --project "$PROJECT"
+```
+
+`chapter_pipeline.py` 产出关键帧和起音帧检查，不会提供可播放的 Studio 或预览视频；命令成功不能视为完成预览。截图仅辅助检查布局、数值及字幕安全区。
+
+### 配音返修后的动画同步
+
+新工程优先由当前语音事件驱动动作。返修已有片时，重新对齐的字幕与事件不能直接配上旧的绝对帧号；只改Composition总帧数也不能完成同步。已有大量已认可的设计帧时，可冻结旧设计时间轴，以对应的语音事件或短语起点生成新音频帧到设计帧的分段映射，在主画面入口统一使用。锚点在两条时间轴上严格递增，不能在各子函数里混用新旧帧号。字幕、音轨和实际播放进度仍使用新音频帧。参见[勾股定理返修样例](approved-pythagorean.md#音频返修与时间轴)。
+
+若仅改变字幕分组、实际音频未变，可保留已有语音锚点映射；重新核对逐字投影与全片覆盖。修音频后更新浏览器音轨版本，优先用整条音频内容哈希，避免只依赖固定文件名或某一个未变化的beat。确认实际媒体源已更新，并从较早出现目标词的位置播放检查；不以热更新完成代替音轨验证。不手改`build/`生成文件，不改音频迁就旧动画。
+
+### Studio 后台启动
+
+Studio 是常驻服务，正常运行时不会退出。**必须后台启动，不能把前台命令退出作为启动完成条件**；不要使用 `studio ... | head -20`、等待服务退出的 `wait` 或持续不返回的 `tail -f`。共享工具当前的 `--detach` 只处理 `render`，不能给 `studio` 加上该参数就声称已后台化。
+
+先检查本项目已有服务和 `preview/studio/studio.json`。已有可用服务直接复用，不重复启动。没有服务时选择确认空闲的 `STUDIO_PORT`，用本 Skill 的启动器：
+
+```bash
+python3 "$MINUTE_SKILL/scripts/start_studio.py" \
+  --shared-video "$SHARED_VIDEO" --project "$PROJECT" --port "$STUDIO_PORT"
+```
+
+启动器使用独立后台会话，关闭标准输入，将输出和错误写入 `preview/studio/studio.log`，立即返回PID、端口、候选URL及记录文件路径。`status=starting` 只表示已发起启动，不能当作就绪。它不会等待Studio退出，也不会打开浏览器。
+
+随后用独立、可返回的检查确认就绪：读取日志末尾（如 `tail -n 40`），检查该项目服务的端口监听，再对实际URL发起有超时的HTTP请求（如 `curl --max-time 2 -s -o /dev/null -w '%{http_code}' "$STUDIO_URL"`）。HTTP正常后直接打开浏览器，不因后台进程仍在运行而继续等待。首次检查可在最多30秒内有限重试；未就绪就回到日志和进程检查，报告具体错误，不能反复说“仍在打包”并无限等待。启动器记录的候选URL须与实际日志、监听端口一致；端口被其他项目占用时选空闲端口，不停止别人的服务。
+
+如启动记录已存在但服务失效，先核对PID、项目与日志，保留旧记录和日志，再明确重试；不要覆盖诊断信息或循环拉起服务。进程检查只输出相关PID、可执行文件名、必要的项目参数和端口，不输出完整shell环境或凭证。
+
+第四阶段必须执行以下交付检查：
+
+1. 检查是否已有本项目的 Studio，复用可用实例；否则按上面的后台启动流程运行并确认就绪。共享工具给 Remotion 传入了 `--no-open`，**不会自动打开浏览器**，必须从实际启动日志读取URL，再主动在用户可访问的浏览器打开。不要猜端口，也不要误用其他视频项目的服务。
+2. 选择 `project.json.compositionId` 对应的完整视频，在浏览器验证可以播放：时间和画面随播放推进，检查旁白音轨、字幕及关键转场，并查看全条。只有截图、typecheck或静帧渲染成功，均不能证明播放和音画同步；无法试听的部分如实列为未验证。
+3. 交付实际可访问的 Studio 链接、Composition 名称、实测时长及检查结果，记录服务进程、端口和日志位置，暂停播放后保留预览服务与供用户查看的浏览器页面。不要在交付链接前或交付后立即关闭服务。临时自动化检查页可以关闭，用户预览页与服务在用户结束预览或不再需要时清理。
+
+临时自动化检查应按项目浏览器收尾规则在异常路径也关闭其浏览器上下文/进程，不能只关标签就算会话退出。保留供用户查看的Studio服务，与保留临时自动化测试浏览器是两件事；不关闭用户已有浏览器或别的任务的服务。
+
+生成带音频的预览MP4时，同样沿用共享导出管线的原音频复用封装方式，再用 `verify_export.py --project "$PROJECT" --video <预览相对路径>` 核对全解码与波形同步；Remotion直接AAC编码成功不能证明音轨没有采样偏移。不得改原配音来迁就预览编码。
+
+只有截图时，进度应写“关键帧已检查，动态预览待完成”，不得写“阶段④完成”。Studio 无法启动或无法访问时，保留错误记录并继续排查；仍无法解决则明确交付阻塞原因。必要时可提供经实际播放验证的带配音预览视频，记录改用视频的原因；这属于第四阶段预览，不等于第五阶段正式MP4导出验收，也不能声称Studio已启动。
+
+## 导出与交付
+
+用户推进到最终导出阶段、明确要求导出或要求连续出片时执行；单次“下一步”仍受当前阶段边界约束，配音、分镜或动画预览阶段不自动执行本段。
+
+```bash
+node "$SHARED_VIDEO/tools/remotion.mjs" render --project "$PROJECT" --detach
+python3 "$SHARED_VIDEO/tools/verify_export.py" --project "$PROJECT"
+python3 "$MINUTE_SKILL/scripts/one_minute.py" check \
+  --project "$PROJECT" --media "$PROJECT/output/<project.outputName>"
+```
+
+输出文件名从实际 `project.json.outputName` 读取，不把尖括号示例原样传入命令。渲染状态和日志按共享工具返回路径读取，不重复启动渲染。
+
+成片包含所选音色旁白和字幕；无声视频只是中间产物。超过目标时长时保留全文、完整音频和语速，按实际音频长度设置画面与字幕，在本阶段导出并报告实测时长；不精简文稿，不提供删减建议、可删项或精简版本，不使用 `-shortest`、`-t 60` 或加速来掩盖。检查失败时修复对应的漏字、媒体或同步问题，不为时长提醒重新锁定删减稿。用户另行明确要求某个精确时长且与完整稿件冲突时，只说明实际时长与要求的冲突，保留原稿等待用户指示，不附删减方案；补留白也必须让画面、音轨及生成时间轴一致。
+
+`verify_export.py` 负责全解码及波形同步核对，本 Skill 检查文字、声音配置和时长目标；两者都不能替代正常播放审片。只对实际验证过的内容报告通过。

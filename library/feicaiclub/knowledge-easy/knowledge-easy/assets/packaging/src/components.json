@@ -1,0 +1,298 @@
+[
+  {
+    "id": "hero",
+    "name": "Subject and question",
+    "purpose": "Give an abstract question a tangible subject.",
+    "inputs": "Person or object footage, key terms, a question, and the explanatory focus",
+    "examples": "Psychology: seeing and understanding; history: people and their times; society: individuals and groups",
+    "motion": "Establish the complete subject, then introduce the concepts and question in reading order.",
+    "start": 0,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "left": "看<br>见",
+      "right": "理<br>解",
+      "question": "你看到的，未必是全部"
+    },
+    "media_slots": {
+      "bg": "chess",
+      "portrait-film": "blue"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "compare",
+    "name": "Concept comparison",
+    "purpose": "Compare two easily confused concepts at a common scale.",
+    "inputs": "Two concepts, a shared subject, and an explanation of each",
+    "examples": "Knowing / understanding; intention / outcome; policy / implementation",
+    "motion": "Show both sides together, then emphasize each in turn. Do not use red crosses as a shortcut for right and wrong.",
+    "start": 8,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "a-label": "叫得出名字",
+      "b-label": "说得清原因",
+      "ta": "熟悉",
+      "tb": "理解",
+      "q": "同一件事，两种理解的深度"
+    },
+    "media_slots": {
+      "bg": "book",
+      "a-film": "book",
+      "b-film": "typing"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "chapter",
+    "name": "Chapter sequence",
+    "purpose": "Give a longer passage a clear route through the ideas.",
+    "inputs": "Two to five short headings, chapter footage, and the active item",
+    "examples": "Observe / question / explain / reassess; origin / channel / node / impact",
+    "motion": "Build the chapter sequence in left-to-right Chinese reading order, shifting emphasis with the narration.",
+    "start": 16,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "把问题，一层层打开",
+      "note": "每一步，都让前一个问题变得更清楚"
+    },
+    "media_slots": {
+      "bg": "rain",
+      "film0": "chess",
+      "film1": "book",
+      "film2": "notes",
+      "film3": "street"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "evidence",
+    "name": "Evidence and interpretation",
+    "purpose": "Ground a judgment in observable evidence and context.",
+    "inputs": "Source images, a detail to focus on, and two levels of explanation",
+    "examples": "Pages and interpretation; archives and people; images and context",
+    "motion": "Keep source material flat and readable, then shift attention from the key detail to its interpretation.",
+    "start": 24,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "large-label": "先看材料，再作解释",
+      "t": "证据"
+    },
+    "media_slots": {
+      "bg": "book",
+      "large-film": "book"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "relation",
+    "name": "People and relationships",
+    "purpose": "Show who influences whom and how they are connected.",
+    "inputs": "People or entities, relationship labels, and direction",
+    "examples": "Friends and choices; cities and trade; organizations and institutions",
+    "motion": "Introduce the subjects, establish their relationships, then emphasize the key connection.",
+    "start": 32,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "是谁，影响了这个选择？",
+      "a-label": "身边的人",
+      "b-label": "看见的生活",
+      "c-label": "我的愿望",
+      "n1": "认同",
+      "n2": "向往"
+    },
+    "media_slots": {
+      "bg": "street",
+      "a-film": "chess",
+      "b-film": "notes",
+      "c-film": "blue"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "feedback",
+    "name": "Feedback loop",
+    "purpose": "Explain how a behavior reinforces itself.",
+    "inputs": "Three stages, a genuine feedback connection, and a way out",
+    "examples": "Expectation / action / feedback; pressure / avoidance / greater difficulty starting",
+    "motion": "Complete the connections in sequence, then hold the closed loop instead of rotating it continuously.",
+    "start": 40,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "为什么越来越难开始？",
+      "p0-label": "担心结果",
+      "p1-label": "暂时回避",
+      "p2-label": "更难开始",
+      "note": "短暂的轻松，也可能强化下一次回避"
+    },
+    "media_slots": {
+      "bg": "typing",
+      "p0-film": "clock",
+      "p1-film": "typing",
+      "p2-film": "notes"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "quantity",
+    "name": "Quantity and probability",
+    "purpose": "Put a conspicuous result back in the context of the full sample.",
+    "inputs": "Total, selected count, units, and whether the data is factual or illustrative",
+    "examples": "Three outcomes across ten attempts; proportions across different groups",
+    "motion": "Establish the whole before highlighting a subset. Values must match the number of objects shown.",
+    "start": 48,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "title": "先看见整体，再讨论结果",
+      "total": "10",
+      "total-label": "次尝试",
+      "part": "3",
+      "part-label": "次完成",
+      "note": "演示数据"
+    },
+    "media_slots": {
+      "bg": "rain"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "timeline",
+    "name": "Time and turning points",
+    "purpose": "Show the same subject changing over time.",
+    "inputs": "Three stages, a subject, a turning point, and actual years or stage names",
+    "examples": "Before and after an event; the formation of a viewpoint; changes in an institution",
+    "motion": "Move time consistently in one direction and leave enough reading time at turning points.",
+    "start": 56,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "一个判断，是怎样改变的"
+    },
+    "media_slots": {
+      "bg": "book",
+      "time-film0": "chess",
+      "time-film1": "book",
+      "time-film2": "notes"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "map-focus",
+    "name": "Map location",
+    "purpose": "First establish where the story takes place.",
+    "inputs": "Base map, extent, focus coordinates, place names, and historical period",
+    "examples": "Cities, mountain passes, ports, and cultural regions",
+    "motion": "Move from the region to the location, keeping camera movement and markers in the same coordinate system.",
+    "start": 64,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "把故事，放回地图",
+      "note": "先给空间坐标，再进入人物与事件"
+    },
+    "media_slots": {
+      "bg": "book"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "map-route",
+    "name": "Routes and diffusion",
+    "purpose": "Show direction of travel, stops, and sequence.",
+    "inputs": "Base map, route coordinates, stops, sequence, and an indication of whether the route is factual or schematic",
+    "examples": "Migration, trade routes, diplomatic journeys, and the spread of knowledge",
+    "motion": "Reveal the route in segments, introducing place names as it reaches them. Animation speed does not represent travel time.",
+    "start": 72,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "沿着一条路，理解联系",
+      "note": "路线方向示意"
+    },
+    "media_slots": {
+      "bg": "book"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "map-period",
+    "name": "Periods and geographic extent",
+    "purpose": "Compare spatial changes between two periods on the same base map.",
+    "inputs": "Dates for both periods, a shared projection, and boundary data and sources for each",
+    "examples": "Territories, administrative areas, areas of control, and cultural diffusion",
+    "motion": "Keep scale and viewing extent consistent. Alternate or juxtapose layers, and identify uncertain boundaries.",
+    "start": 80,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "t": "保持同一尺度，才能比较",
+      "note": "同一底图 · 同一比例 · 不同观察范围"
+    },
+    "media_slots": {
+      "bg": "book"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  },
+  {
+    "id": "context",
+    "name": "Detail and context",
+    "purpose": "Bring overlooked conditions into the explanation.",
+    "inputs": "A single source image or clip, a focal detail, the full view, and a change in judgment",
+    "examples": "The context of a statement; the situation behind an expression; a detail in an artifact",
+    "motion": "Start with the detail, then widen the view while keeping the original subject in the frame.",
+    "start": 88,
+    "duration": 8,
+    "source": "../../base_catalog.py",
+    "text_slots": {
+      "a": "先看见一个表情",
+      "b": "再看见他所处的情境"
+    },
+    "media_slots": {
+      "bg": "chess",
+      "detail": "chess"
+    },
+    "configuration": {
+      "text": {},
+      "media": {}
+    }
+  }
+]

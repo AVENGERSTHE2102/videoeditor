@@ -1,0 +1,4 @@
+interface:
+  display_name: "Family Travel Editor"
+  short_description: "Plan travel films and edit with your preferred tools"
+  default_prompt: "Use $family-travel-editor to help me get started: ask about my trip and footage, build a short film brief and guide me to the next step."

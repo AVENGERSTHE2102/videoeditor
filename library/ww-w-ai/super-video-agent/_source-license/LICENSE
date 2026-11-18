@@ -1,0 +1,64 @@
+Super Video Agent License 1.0
+
+Copyright 2026 DubDubDub Corp. (https://ww-w.ai)
+
+1. Definitions
+
+"Software" means Super Video Agent: the skill, scripts, templates, references, examples and other files in this repository and any copy of them.
+"You" means the person or entity that uses the Software.
+"Videos" means films, clips, images, audio and other output You produce by using the Software.
+"Modified Version" means the Software with changes, additions or deletions, in whole or in part.
+
+2. Permissions
+
+Subject to the conditions and restrictions below, DubDubDub Corp. grants You a worldwide, non-exclusive, non-transferable, royalty-free license to:
+
+(a) download, install, run and use the Software;
+(b) modify the Software and use Modified Versions for Your own use, including inside Your organization;
+(c) fork the repository on GitHub and submit changes back to the original repository as pull requests.
+
+3. Your Videos
+
+Videos You make with the Software are Yours. You may use, publish, monetize and sell them for any purpose, including commercial purposes. This license claims no rights in Your Videos.
+
+4. Restrictions
+
+You may not:
+
+(a) sell, rent, lease or sublicense the Software or a Modified Version, or charge for access to it;
+(b) include the Software or a Modified Version, in whole or in part, in a paid course, coaching program, membership, e-book, template pack or other paid product, or make receiving it conditional on a payment, purchase or paid subscription;
+(c) provide the Software or a Modified Version to others as a hosted service, managed service or API;
+(d) publicly distribute the Software or a Modified Version, under its original name or any other name, outside the forks and pull requests allowed in section 2(c);
+(e) remove or obscure the authorship of the Software, or present the Software or a Modified Version as Your own work.
+
+5. Teaching
+
+You may teach how to use the Software, in free or paid lessons, articles and videos, as long as You do not distribute the Software or a Modified Version, and point learners to the original repository.
+
+6. Notices
+
+Every copy of the Software, including a fork, must keep this license and the copyright notice above.
+
+7. Termination
+
+If You break any condition or restriction of this license, Your license ends automatically.
+
+8. Contributions
+
+By submitting a pull request or other contribution, You grant DubDubDub Corp. a perpetual, worldwide, non-exclusive, royalty-free, irrevocable license to use, modify, sublicense and distribute Your contribution as part of the Software under any license.
+
+9. Third-party components
+
+Files from third parties that the Software bundles or downloads (for example fonts, sound effects, 3D assets, libraries) remain under their own licenses, listed in THIRD-PARTY-NOTICES or next to the files. This license does not change them.
+
+10. Earlier versions
+
+Versions of the Software released before this license (1.3.3 and earlier) remain available under the Apache License 2.0 on the terms they were released under.
+
+11. Names
+
+This license grants no right to use the names "Super Video Agent", "DubDubDub", "ww-w.ai" or their logos, except to state truthfully where the Software came from.
+
+12. No warranty and no liability
+
+The Software is provided "as is", without warranty of any kind. To the extent the law allows, DubDubDub Corp. is not liable for any claim, damage or other liability arising from the Software or its use.

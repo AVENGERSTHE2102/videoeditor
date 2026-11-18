@@ -1,0 +1,4 @@
+interface:
+  display_name: "VibeScience"
+  short_description: "把小初高数理化生或 AI 知识点做成1至2分钟科普视频，含写稿、配音和手机端动画预览"
+  default_prompt: "用 $one-minute-remotion 制作1至2分钟科普视频，标题只写知识点，画面采用手机观看字号；读取现有进度，每次只完成下一个阶段，配音完成后停下供试听，保留全文与已选音色，超时不删减。"

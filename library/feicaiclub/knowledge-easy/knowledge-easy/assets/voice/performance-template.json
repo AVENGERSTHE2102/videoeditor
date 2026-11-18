@@ -1,0 +1,12 @@
+{
+  "language": "zh-CN",
+  "instruction": "Write segments as complete thought groups or paragraphs. Keep the final script in text; use tts_text only for pronunciation corrections. Describe specific emphasis, pauses, and emotion in direction, which is passed to the model and still requires listening review. Replace the example content and save the plan as the project voice-plan.json.",
+  "segments": [
+    {
+      "id": "opening",
+      "text": "知道发生了什么，只是开始。更重要的是，理解当时的人为什么会这样选择。",
+      "direction": "Keep the first sentence plain and connected. In the second, emphasize “更重要,” move lightly through “的是,” and make “为什么” clear. Finish the sentence decisively.",
+      "gap_after": 0
+    }
+  ]
+}

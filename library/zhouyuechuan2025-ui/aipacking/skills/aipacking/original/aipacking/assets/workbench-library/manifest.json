@@ -1,0 +1,14 @@
+{
+  "edition": "aipacking",
+  "note": "Derived from original source; excluded dispatch and unreachable source removed.",
+  "files": [
+    {
+      "path": "WorkbenchNative.js",
+      "sha256": "8f1e84be2ffe2e6abe833c2d9eb3233c7942e0cf2a0de47e69fd1053b1efd2e6"
+    },
+    {
+      "path": "catalog.json",
+      "sha256": "5b0332f8c3e87dd94a61fbfe6a744978bf4b500ae48feb3a0bfa4e7c20f26be6"
+    }
+  ]
+}
